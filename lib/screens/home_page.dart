@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vs/widgets/polygon.dart';
+import 'package:vs/widgets/shapes.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -21,6 +22,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 3;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void _incrementCounter() {
     setState(() {
@@ -36,17 +38,28 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-      child: Column(children: [
+      key: _scaffoldKey,
+      body: Column(children: [
+        /*Container(
+          alignment: Alignment.topLeft,
+          child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: IconButton(
+                icon: Icon(Icons.menu, size: 30),
+                onPressed: () {
+                  _scaffoldKey.currentState!.openDrawer();
+                },
+              )),
+        ),*/
         _counter >= 3
             ? GestureDetector(
-                child: Polygon(sides: _counter),
+                child: Shape(),
                 onTap: () {
                   _incrementCounter();
                 },
               )
             : Container(),
       ]),
-    ));
+    );
   }
 }
