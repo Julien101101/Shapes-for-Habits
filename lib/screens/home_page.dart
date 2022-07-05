@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vs/util/color_on_select.dart';
 import 'package:vs/widgets/polygon.dart';
 import 'package:vs/widgets/shapes.dart';
 
@@ -52,11 +54,44 @@ class _MyHomePageState extends State<MyHomePage> {
               )),
         ),*/
         _counter >= 3
-            ? GestureDetector(
-                child: Shape(),
-                onTap: () {
-                  _incrementCounter();
-                },
+            ? Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Flexible(
+                        child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Shape(),
+                    )),
+                    /*VerticalDivider(
+                      color: Colors.black,
+                      thickness: 1,
+                    ),*/
+                    Flexible(
+                        child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ColorOnSelect(),
+                    )),
+                    /*VerticalDivider(
+                      color: Colors.black,
+                      thickness: 1,
+                    ),*/
+                    Flexible(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell( //changed GestureDetector to Inkwell
+                          child: Polygon(
+                            sides: _counter,
+                          ),
+                          onTap: () {
+                            _incrementCounter();
+                          },
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               )
             : Container(),
       ]),

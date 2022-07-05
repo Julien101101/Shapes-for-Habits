@@ -13,7 +13,7 @@ class FirstPageScreen extends StatefulWidget {
 class _FirstPageScreenState extends State<FirstPageScreen> {
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 1), () {
       Navigator.pushNamedAndRemoveUntil(context, "home", (route) => false);
     });
     return SizerUtil.orientation == Orientation.portrait

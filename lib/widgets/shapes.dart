@@ -48,15 +48,18 @@ class _ShapeState extends State<Shape> {
 
   Widget ShapeRow(bool selected, String name) {
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         MyBullet(color: selected ? Colors.orange[400] : Colors.grey),
-        Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Text(name,
-              style: TextStyle(
-                fontSize: MediaQuery.of(context).size.height * 0.1,
-                color: selected ? Colors.orange[400] : Colors.grey,
-              )),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Text(name,
+                style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.height * 0.1,
+                  color: selected ? Colors.orange[400] : Colors.grey,
+                )),
+          ),
         )
       ],
     );
