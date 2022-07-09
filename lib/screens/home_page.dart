@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:vs/util/color_on_select.dart';
+import 'package:vs/widgets/color_on_select.dart';
 import 'package:vs/widgets/polygon.dart';
 import 'package:vs/widgets/shapes.dart';
 
@@ -24,8 +24,19 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 3;
+  Color color = Colors.red;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
+  List<Color> colors = [
+    Colors.black,
+    Colors.orange,
+    Colors.pink,
+    Colors.green,
+    Colors.blue,
+    Colors.purple,
+    Colors.brown,
+    Colors.grey,
+    Colors.amber
+  ];
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -39,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       key: _scaffoldKey,
       body: Column(children: [
@@ -60,29 +72,81 @@ class _MyHomePageState extends State<MyHomePage> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Flexible(
+                        flex: 1,
                         child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Shape(),
-                    )),
+                          padding: const EdgeInsets.all(8.0),
+                          child: Shape(),
+                        )),
                     /*VerticalDivider(
                       color: Colors.black,
                       thickness: 1,
                     ),*/
                     Flexible(
+                        flex: 1,
                         child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ColorOnSelect(),
-                    )),
+                            padding: const EdgeInsets.all(8.0),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: size.height * 0.15),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      height: size.height * 0.7,
+                                      width: size.height * 0.7,
+                                      child: GridView.builder(
+                                        gridDelegate:
+                                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 3,
+                                        ),
+                                        itemCount: colors.length,
+                                        physics: NeverScrollableScrollPhysics(),
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                color = colors[index];
+                                              });
+                                            },
+                                            child: GridTile(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    color: colors[index],
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ))),
                     /*VerticalDivider(
                       color: Colors.black,
                       thickness: 1,
                     ),*/
                     Flexible(
+                      flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: InkWell( //changed GestureDetector to Inkwell
+                        child: InkWell(
+                          //changed GestureDetector to Inkwell
                           child: Polygon(
                             sides: _counter,
+                            color: color,
                           ),
                           onTap: () {
                             _incrementCounter();

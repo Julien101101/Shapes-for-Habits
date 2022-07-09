@@ -13,7 +13,7 @@ class FirstPageScreen extends StatefulWidget {
 class _FirstPageScreenState extends State<FirstPageScreen> {
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 3), () {
       Navigator.pushNamedAndRemoveUntil(context, "home", (route) => false);
     });
     return SizerUtil.orientation == Orientation.portrait
@@ -51,24 +51,24 @@ class _FirstPageScreenState extends State<FirstPageScreen> {
   _widTitle() {
     return Padding(
       padding: EdgeInsets.only(top: 1.5.h),
-      child: Text(Strings.APP_NAME,
-          style: GoogleFonts.lato(
-            textStyle: TextStyle(fontSize: 30.sp, color: Colors.black),
-          )),
+      child: Text(
+        Strings.APP_NAME,
+        style: TextStyle(
+            fontFamily: "Roboto", fontSize: 30.sp, color: Colors.black),
+      ),
     );
   }
 
   _widDesc() {
     return Padding(
-        padding: EdgeInsets.only(right: 10.w, left: 10.w, top: 2.h),
-        child: Text(
-          Strings.APP_DESC,
-          textAlign: TextAlign.center,
-          style: GoogleFonts.lato(
-            textStyle:
-                TextStyle(height: 1.3, fontSize: 13.sp, color: Colors.grey),
-          ),
-        ));
+      padding: EdgeInsets.only(right: 10.w, left: 10.w, top: 2.h),
+      child: Text(
+        Strings.APP_DESC,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+            fontFamily: "Source Sans Pro", fontSize: 30.sp, color: Colors.grey),
+      ),
+    );
   }
 
 //landscape
@@ -101,23 +101,23 @@ class _FirstPageScreenState extends State<FirstPageScreen> {
   _widTitleLand() {
     return Padding(
       padding: EdgeInsets.only(top: 1.0.h),
-      child: Text(Strings.APP_NAME,
-          style: GoogleFonts.lato(
-            textStyle: TextStyle(fontSize: 30.sp, color: Colors.black),
-          )),
+      child: Text(
+        Strings.APP_NAME,
+        style: TextStyle(
+            fontFamily: "Roboto", fontSize: 26.sp, color: Colors.black),
+      ),
     );
   }
 
   _widDescLand() {
     return Padding(
-        padding: EdgeInsets.only(right: 25.w, left: 25.w, top: 1.5.h),
-        child: Text(
-          Strings.APP_DESC,
-          textAlign: TextAlign.center,
-          style: GoogleFonts.lato(
-            textStyle:
-                TextStyle(height: 1.3, fontSize: 13.sp, color: Colors.grey),
-          ),
-        ));
+      padding: EdgeInsets.only(right: 25.w, left: 25.w, top: 1.5.h),
+      child: Text(
+        Strings.APP_DESC,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+            fontFamily: "Source Sans Pro", fontSize: 13.sp, color: Colors.grey),
+      ),
+    );
   }
 }
