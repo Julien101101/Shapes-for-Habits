@@ -1,19 +1,20 @@
-class User {
+class Model {
   late final String name;
   late final String id;
-  User({
+  Model({
     required this.name,
     required this.id,
   });
+  Model.empty();
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['name'] = name;
     _data['id'] = id;
     return _data;
   }
-  User.fromJson(Map<String, dynamic> json){
-  name = json['name'];
-  id = json['id'];
+
+  Model.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    id = json['id'];
   }
 }
-
