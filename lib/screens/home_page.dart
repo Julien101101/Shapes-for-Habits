@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sizer/sizer.dart';
 import 'package:vs/widgets/bullet.dart';
 import 'package:vs/widgets/color_on_select.dart';
 import 'package:vs/widgets/lines.dart';
@@ -46,22 +47,12 @@ class _MyHomePageState extends State<MyHomePage> {
   List taps = [];
   void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
       _counter++;
     });
   }
 
   void _incrementLine() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
       _linecounter++;
     });
   }
@@ -207,22 +198,24 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                               ),
                             )
-                          : Flexible(
-                              flex: 1,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: InkWell(
-                                  //changed GestureDetector to Inkwell
-                                  child: Lines(
-                                    length: _linecounter,
-                                    color: color,
+                          : choice.contains('lines')
+                              ? Flexible(
+                                  flex: 1,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: InkWell(
+                                      //changed GestureDetector to Inkwell
+                                      child: Lines(
+                                        length: _linecounter,
+                                        color: color,
+                                      ),
+                                      onTap: () {
+                                        _incrementLine();
+                                      },
+                                    ),
                                   ),
-                                  onTap: () {
-                                    _incrementLine();
-                                  },
-                                ),
-                              ),
-                            )
+                                )
+                              : Flexible(child: Container())
                     ],
                   ),
                 )
@@ -242,7 +235,7 @@ class _MyHomePageState extends State<MyHomePage> {
             padding: const EdgeInsets.all(15.0),
             child: Text(name,
                 style: TextStyle(
-                  fontSize: MediaQuery.of(context).size.height * 0.1,
+                  fontSize: 12.sp,
                   color: selected ? Colors.orange[400] : Colors.grey,
                 )),
           ),

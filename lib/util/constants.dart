@@ -4,6 +4,7 @@ class Constant {
   static const String IMG_2 = _IMG_PATH + 'img_2.png';
   static const String IMG_3 = _IMG_PATH + 'img_3.png';
   static const String IMG_4 = _IMG_PATH + 'img_4.png';
+  static const String IMG_5 = _IMG_PATH + 'logo.png';
 
   //fonts
   static const String FONT_REG = 'OpenSansRegular';
