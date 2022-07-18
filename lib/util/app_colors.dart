@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class AppColors{
-  static const String _color1='#FF725E';
-  static const String _color2='#BA68C8';
-  static const String _color3='#FFC100';
-  static const String _color4='#7E57C2';
+  static const String _color1='#0CCAED';
+  static const String _color2='#01EC8F';
+  static const String _color3='#FD4C9A';
+  static const String _color4='#ED2700';
 
-  static color1() {
+  static textcolor() {
     return getColorFromHex(_color1);
   }
 

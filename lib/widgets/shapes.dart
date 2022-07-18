@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:vs/view%20model/shape_view_model.dart';
 import 'package:vs/widgets/bullet.dart';
 
 class Shape extends StatefulWidget {
@@ -17,6 +19,7 @@ class _ShapeState extends State<Shape> {
 
   @override
   Widget build(BuildContext context) {
+    ShapeViewModel shapeViewModel = context.read<ShapeViewModel>();
     return SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -32,6 +35,7 @@ class _ShapeState extends State<Shape> {
                         setState(() {
                           taps.clear();
                           taps.add(names[index]);
+                          shapeViewModel.setName(names[index]);
                         });
                       },
                       child: Padding(

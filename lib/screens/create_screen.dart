@@ -17,35 +17,37 @@ class _CreateState extends State<Create> {
   @override
   Widget build(BuildContext context) {
     ShapeViewModel shapeViewModel = context.read<ShapeViewModel>();
-    return Container(
-        child: GestureDetector(
-            onVerticalDragUpdate: (details) {
-              print('drag');
-            },
-            child: Column(children: [
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Flexible(child: Shape()),
-                    Flexible(child: ColorOnSelect()),
-                    shapeViewModel.name.contains('Polygon')
-                        ? Flexible(
-                            child: Polygon(
-                                sides: shapeViewModel.counter,
-                                color: shapeViewModel.color),
-                          )
-                        : shapeViewModel.name.contains('Lines')
-                            ? Flexible(
-                                child: Lines(
-                                    length: shapeViewModel.linecounter,
-                                    color: shapeViewModel.color),
-                              )
-                            : Flexible(child: Container())
-                  ],
-                ),
-              )
-            ])));
+    return Scaffold(
+      body: Container(
+          child: GestureDetector(
+              onVerticalDragUpdate: (details) {
+                print('drag');
+              },
+              child: Column(children: [
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Flexible(child: Shape()),
+                      Flexible(child: ColorOnSelect()),
+                      shapeViewModel.name.contains('polygon')
+                          ? Flexible(
+                              child: Polygon(
+                                  sides: shapeViewModel.counter,
+                                  color: shapeViewModel.color),
+                            )
+                          : shapeViewModel.name.contains('lines')
+                              ? Flexible(
+                                  child: Lines(
+                                      length: shapeViewModel.linecounter,
+                                      color: shapeViewModel.color),
+                                )
+                              : Flexible(child: Container())
+                    ],
+                  ),
+                )
+              ]))),
+    );
   }
 }
