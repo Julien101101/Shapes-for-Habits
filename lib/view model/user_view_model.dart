@@ -33,6 +33,7 @@ class UserViewModel extends BaseViewModel {
     Model appUser = Model(name: nameTextEditingController.text, id: id);
     await ref.doc(id).set(appUser.toJson());
     setLoading();
+    return id;
   }
 
   //getting user from firebase

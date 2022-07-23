@@ -19,3 +19,5 @@ Route<dynamic> generateRoute(RouteSettings settings) {
               ));
   }
 }
+
+//logo//welcome//intro//home//blank_canvas//shapes

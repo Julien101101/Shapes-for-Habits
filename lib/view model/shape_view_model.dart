@@ -58,14 +58,13 @@ class ShapeViewModel extends BaseViewModel {
     String userId,
     String objectType,
     String objectName,
-    String color,
     int count,
   ) {
     Habits habits = Habits(
         userId: userId,
         objectName: objectName,
         objectType: objectType,
-        color: color,
+        color: _color.toString(),
         count: count);
     ref.add(habits.toJson());
   }

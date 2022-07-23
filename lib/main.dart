@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: true,
             title: 'Shapes for Habits',
             theme: ThemeData(fontFamily: 'Quicksand'),
-            home: const WelcomeScreen(),
+            home: IntroScreen(),
             onGenerateRoute: router.generateRoute,
           ),
         );
