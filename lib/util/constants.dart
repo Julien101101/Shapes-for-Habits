@@ -7,8 +7,8 @@ class Constant {
   static const String IMG_5 = _IMG_PATH + 'logo.svg';
 
   //fonts//quicksand
-  static const String FONT_REG = 'OpenSansRegular';
+  static const String FONT_REG = 'Quicksand';
   static const String FONT_LIGHT = 'OpenSansLight';
-  static const String FONT_SEMIBOLD = 'OpenSansSemiBold';
-  static const String FONT_BOLD = 'OpenSansBold';
+  static const String FONT_SEMIBOLD = 'Quicksand';
+  static const String FONT_BOLD = 'Quicksand';
 }

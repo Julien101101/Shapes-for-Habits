@@ -57,9 +57,10 @@ class _ShapeState extends State<Shape> {
         MyBullet(color: selected ? Colors.orange[400] : Colors.grey),
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.all(15.0),
+            padding: const EdgeInsets.all(15.0), //symmetric.(horizontal)
             child: Text(name,
                 style: TextStyle(
+                  fontFamily: 'Quicksand',
                   fontSize: MediaQuery.of(context).size.height * 0.1,
                   color: selected ? Colors.orange[400] : Colors.grey,
                 )),

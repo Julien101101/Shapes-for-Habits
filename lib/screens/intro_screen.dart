@@ -54,7 +54,7 @@ class _FirstPageScreenState extends State<FirstPageScreen> {
       child: Text(
         Strings.APP_NAME,
         style: TextStyle(
-            fontFamily: "Roboto", fontSize: 30.sp, color: Colors.black),
+            fontFamily: "Quicksand", fontSize: 30.sp, color: Colors.black),
       ),
     );
   }
@@ -104,7 +104,7 @@ class _FirstPageScreenState extends State<FirstPageScreen> {
       child: Text(
         Strings.APP_NAME,
         style: TextStyle(
-            fontFamily: "Roboto", fontSize: 26.sp, color: Colors.black),
+            fontFamily: "Quicksand", fontSize: 26.sp, color: Colors.black),
       ),
     );
   }

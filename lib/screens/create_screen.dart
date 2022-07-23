@@ -14,40 +14,71 @@ class Create extends StatefulWidget {
 }
 
 class _CreateState extends State<Create> {
+  String name = '';
+
   @override
   Widget build(BuildContext context) {
-    ShapeViewModel shapeViewModel = context.read<ShapeViewModel>();
+    Size size = MediaQuery.of(context).size;
+
     return Scaffold(
-      body: Container(
-          child: GestureDetector(
-              onVerticalDragUpdate: (details) {
-                print('drag');
-              },
-              child: Column(children: [
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Flexible(child: Shape()),
-                      Flexible(child: ColorOnSelect()),
-                      shapeViewModel.name.contains('polygon')
-                          ? Flexible(
-                              child: Polygon(
-                                  sides: shapeViewModel.counter,
-                                  color: shapeViewModel.color),
-                            )
-                          : shapeViewModel.name.contains('lines')
-                              ? Flexible(
-                                  child: Lines(
-                                      length: shapeViewModel.linecounter,
-                                      color: shapeViewModel.color),
-                                )
-                              : Flexible(child: Container())
-                    ],
-                  ),
-                )
-              ]))),
+      body: GestureDetector(onVerticalDragUpdate: (details) {
+        print('drag');
+      }, child: Consumer<ShapeViewModel>(builder: (context, shape, child) {
+        print('name : ${shape.name}');
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Flexible(
+                    flex: 1,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Shape(),
+                    )),
+                Flexible(
+                    flex: 1,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ColorOnSelect(),
+                    )),
+                shape.name.contains('polygon')
+                    ? Flexible(
+                        flex: 1,
+                        child: InkWell(
+                          onTap: () async {
+                            shape.incrementCounter();
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Polygon(
+                                sides: shape.counter, color: shape.color),
+                          ),
+                        ),
+                      )
+                    : shape.name.contains('lines')
+                        ? Flexible(
+                            flex: 1,
+                            child: InkWell(
+                              onTap: () async {
+                                shape.incrementLine();
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Lines(
+                                    length: shape.linecounter,
+                                    color: shape.color),
+                              ),
+                            ),
+                          )
+                        : Flexible(child: Container())
+              ],
+            ),
+          ),
+        );
+      })),
     );
   }
 }

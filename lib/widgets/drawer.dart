@@ -14,10 +14,11 @@ class AppDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.home),
-            title: Text(
-              'Home',
-              style: TextStyle(color: AppColors.textcolor()),
-            ),
+            title: Text('Home',
+                style: TextStyle(
+                  color: AppColors.textcolor(),
+                  fontFamily: 'Quicksand',
+                )),
             onTap: () {
               Navigator.of(context).pushReplacementNamed('create');
             },
