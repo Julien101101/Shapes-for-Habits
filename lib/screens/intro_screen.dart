@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_onboard/flutter_onboard.dart';
+import 'package:vs/util/dimensions.dart';
 
 class IntroScreen extends StatelessWidget {
   final PageController _pageController = PageController();
+
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 60), () {
-      Navigator.pushNamedAndRemoveUntil(context, "home", (route) => false);
-    });
+    DeviceDimension.init(context: context);
+
     return Scaffold(
       body: OnBoard(
         pageController: _pageController,
         // Either Provide onSkip Callback or skipButton Widget to handle skip state
         onSkip: () {
+          Navigator.pushNamedAndRemoveUntil(context, "home", (route) => false);
           // print('skipped');
         },
         // Either Provide onDone Callback or nextButton Widget to handle done state
         onDone: () {
+          Navigator.pushNamedAndRemoveUntil(context, "home", (route) => false);
           // print('done tapped');
         },
         onBoardData: onBoardData,
@@ -40,6 +43,8 @@ class IntroScreen extends StatelessWidget {
         // Either Provide onSkip Callback or skipButton Widget to handle skip state
         skipButton: TextButton(
           onPressed: () {
+            Navigator.pushNamedAndRemoveUntil(
+                context, "home", (route) => false);
             // print('skipButton pressed');
           },
           child: const Text(
@@ -52,7 +57,7 @@ class IntroScreen extends StatelessWidget {
           builder: (context, ref, child) {
             final state = ref.watch(onBoardStateProvider);
             return InkWell(
-              onTap: () => _onNextTap(state),
+              onTap: () => _onNextTap(state, context),
               child: Container(
                 width: 230,
                 height: 50,
@@ -78,7 +83,7 @@ class IntroScreen extends StatelessWidget {
     );
   }
 
-  void _onNextTap(OnBoardState onBoardState) {
+  void _onNextTap(OnBoardState onBoardState, BuildContext context) {
     if (!onBoardState.isLastPage) {
       _pageController.animateToPage(
         onBoardState.page + 1,
@@ -86,7 +91,7 @@ class IntroScreen extends StatelessWidget {
         curve: Curves.easeInOutSine,
       );
     } else {
-      //print("nextButton pressed");
+      Navigator.pushNamedAndRemoveUntil(context, "home", (route) => false);
     }
   }
 }

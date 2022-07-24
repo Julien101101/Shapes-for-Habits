@@ -7,7 +7,6 @@ import 'package:vs/widgets/input_field.dart';
 
 class NameScreen extends StatefulWidget {
   NameScreen({Key? key}) : super(key: key);
-
   @override
   State<NameScreen> createState() => _NameScreenState();
 }
@@ -15,16 +14,16 @@ class NameScreen extends StatefulWidget {
 class _NameScreenState extends State<NameScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  late SharedPreferences sharedPreferences;
+  late SharedPreferences pref;
 
   @override
   void initState() {
-    // TODO: implement initState
+    initSharedPref();
     super.initState();
   }
 
   initSharedPref() async {
-    sharedPreferences = await SharedPreferences.getInstance();
+    pref = await SharedPreferences.getInstance();
   }
 
   @override
@@ -42,9 +41,10 @@ class _NameScreenState extends State<NameScreen> {
               validator: Validators().validateNotEmpty,
             )),
             ElevatedButton(
-              onPressed: () async {
-                var response = await userViewModel.createUser();
-                sharedPreferences.setString('id', response);
+              onPressed: () {
+                var response = userViewModel.createUser();
+                pref.setString('id', response);
+                Navigator.pop(context);
               },
               child: Text('Save'),
             )

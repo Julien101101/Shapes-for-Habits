@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vs/screens/create_screen.dart';
+import 'package:vs/screens/name_screen.dart';
 
 import '../screens/home_page.dart';
 
@@ -12,6 +13,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
               ));
     case 'create':
       return MaterialPageRoute(builder: (context) => const Create());
+    case 'name':
+      return MaterialPageRoute(builder: (context) => NameScreen());
     default:
       return MaterialPageRoute(
           builder: (context) => const MyHomePage(

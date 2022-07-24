@@ -1,7 +1,9 @@
+import 'package:easy_dialog/easy_dialog.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
+import 'package:vs/screens/name_screen.dart';
 import 'package:vs/util/app_colors.dart';
 import 'package:vs/widgets/bullet.dart';
 import 'package:vs/widgets/color_on_select.dart';
@@ -31,9 +33,33 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  late SharedPreferences sharedPreferences;
+  bool _isFirstTime = false;
+  @override
+  void initState() {
+    initSharedPref();
+    super.initState();
+  }
+
+  initSharedPref() async {
+    print('initSharedPref');
+    sharedPreferences = await SharedPreferences.getInstance();
+  }
 
   @override
   Widget build(BuildContext context) {
+  
+    String? id = sharedPreferences.getString('id');
+    if (id == null) {
+      _isFirstTime = true;
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: Text('Enter your name'),
+                content: NameScreen(),
+              ));
+    }
+
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         key: _scaffoldKey,
