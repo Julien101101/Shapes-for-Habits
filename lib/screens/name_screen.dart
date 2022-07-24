@@ -41,8 +41,8 @@ class _NameScreenState extends State<NameScreen> {
               validator: Validators().validateNotEmpty,
             )),
             ElevatedButton(
-              onPressed: () {
-                var response = userViewModel.createUser();
+              onPressed: () async {
+                var response = await userViewModel.createUser();
                 pref.setString('id', response);
                 Navigator.pop(context);
               },

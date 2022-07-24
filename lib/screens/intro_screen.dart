@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_onboard/flutter_onboard.dart';
+import 'package:vs/util/constants.dart';
 import 'package:vs/util/dimensions.dart';
 
 class IntroScreen extends StatelessWidget {
@@ -100,18 +101,18 @@ final List<OnBoardModel> onBoardData = [
   const OnBoardModel(
     title: "Set your own goals and get better",
     description: "Goal support your motivation and inspire you to work harder",
-    imgUrl: "assets/images/img_1.png",
+    imgUrl: Constant.IMG_1,
   ),
   const OnBoardModel(
     title: "Track your progress with statistics",
     description:
         "Analyse personal result with detailed chart and numerical values",
-    imgUrl: 'assets/images/img_1.png',
+    imgUrl: Constant.IMG_1,
   ),
   const OnBoardModel(
     title: "Create photo comparision and share your results",
     description:
         "Take before and after photos to visualize progress and get the shape that you dream about",
-    imgUrl: 'assets/images/img_1.png',
+    imgUrl: Constant.IMG_1,
   ),
 ];

@@ -35,6 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   late SharedPreferences sharedPreferences;
   bool _isFirstTime = false;
+  String? id;
   @override
   void initState() {
     initSharedPref();
@@ -42,25 +43,19 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   initSharedPref() async {
+    id = sharedPreferences.getString('id');
     print('initSharedPref');
     sharedPreferences = await SharedPreferences.getInstance();
   }
 
   @override
   Widget build(BuildContext context) {
-  
-    String? id = sharedPreferences.getString('id');
+    Size size = MediaQuery.of(context).size;
     if (id == null) {
+      Future.delayed(Duration.zero, () => showAlert(context));
       _isFirstTime = true;
-      showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-                title: Text('Enter your name'),
-                content: NameScreen(),
-              ));
     }
 
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
         key: _scaffoldKey,
         drawer: AppDrawer(),
@@ -81,5 +76,16 @@ class _MyHomePageState extends State<MyHomePage> {
                     )),
               ),
             ])));
+  }
+
+  showAlert(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text('Enter your name'),
+              content:
+                  Container(height: size.height * 0.3, child: NameScreen()),
+            ));
   }
 }
