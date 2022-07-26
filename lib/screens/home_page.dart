@@ -52,10 +52,10 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    if (id == null) {
-      Future.delayed(Duration.zero, () => showAlert(context));
-      _isFirstTime = true;
-    }
+    // if (id == null) {
+    //   Future.delayed(Duration.zero, () => showAlert(context));
+    //   _isFirstTime = true;
+    // }
 
     return Scaffold(
         key: _scaffoldKey,
@@ -66,34 +66,44 @@ class _MyHomePageState extends State<MyHomePage> {
               onVerticalDragUpdate: (details) {
                 print('drag');
               },
-              child: Column(children: [
-                Container(
-                  alignment: Alignment.topLeft,
-                  child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: IconButton(
-                        icon: Icon(Icons.menu, size: 30),
-                        onPressed: () {
-                          _scaffoldKey.currentState!
-                              .openDrawer(); //drawer remove later
-                        },
-                      )),
-                ),
-                ListView.builder(
-                    itemCount: shape.habits.length,
-                    itemBuilder: ((context, index) {
-                      return Column(
-                        children: [
-                          Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Polygon(
-                                sides: shape.habits[index].count,
-                                color: Color(shape.habits[index].color),
-                              )),
-                        ],
-                      );
-                    }))
-              ]));
+              child: SingleChildScrollView(
+                child: Column(children: [
+                  Container(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: IconButton(
+                          icon: Icon(Icons.menu, size: 30),
+                          onPressed: () {
+                            _scaffoldKey.currentState!
+                                .openDrawer(); //drawer remove later
+                          },
+                        )),
+                  ),
+                  ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: shape.habits.length,
+                      itemBuilder: ((context, index) {
+                        return Column(
+                          children: [
+                            Container(
+                                height: size.height * 0.3,
+                                padding: const EdgeInsets.all(8.0),
+                                child: Polygon(
+                                  sides: shape.habits[index].count,
+                                  color: Color(shape.habits[index].color),
+                                )),
+                            Text(shape.habits[index].objectName,
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black)),
+                          ],
+                        );
+                      }))
+                ]),
+              ));
         }));
   }
 
@@ -102,7 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
-              title: Text('Enter your name'),
+              title: Text('Enter your name'), // TODO: change to only 1
               content:
                   Container(height: size.height * 0.3, child: NameScreen()),
             ));

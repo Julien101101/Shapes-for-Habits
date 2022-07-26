@@ -5,7 +5,6 @@ import 'package:vs/util/validators.dart';
 import 'package:vs/view%20model/shape_view_model.dart';
 import 'package:vs/widgets/color_on_select.dart';
 import 'package:vs/widgets/input_field.dart';
-import 'package:vs/widgets/lines.dart';
 import 'package:vs/widgets/polygon.dart';
 import 'package:vs/widgets/shapes.dart';
 

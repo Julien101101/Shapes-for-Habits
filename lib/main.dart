@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: true,
         title: 'Shapes for Habits',
-        theme: ThemeData(fontFamily: 'Source Sans Pro'),
+        theme: ThemeData(fontFamily: 'Quicksand'),
         home: IntroScreen(),
         onGenerateRoute: router.generateRoute,
       ),
