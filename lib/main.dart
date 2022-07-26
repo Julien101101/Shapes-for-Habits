@@ -8,7 +8,6 @@ import 'package:vs/view%20model/shape_view_model.dart';
 import 'package:vs/view%20model/user_view_model.dart';
 import 'firebase_options.dart';
 import 'screens/home_page.dart';
-import 'package:sizer/sizer.dart';
 import './util/router.dart' as router;
 
 void main() async {
@@ -23,22 +22,18 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Sizer(
-      builder: (context, orientation, deviceType) {
-        return MultiProvider(
-          providers: [
-            ChangeNotifierProvider(create: (_) => UserViewModel()),
-            ChangeNotifierProvider(create: (_) => ShapeViewModel())
-          ],
-          child: MaterialApp(
-            debugShowCheckedModeBanner: true,
-            title: 'Shapes for Habits',
-            theme: ThemeData(fontFamily: 'Quicksand'),
-            home: IntroScreen(),
-            onGenerateRoute: router.generateRoute,
-          ),
-        );
-      },
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserViewModel()),
+        ChangeNotifierProvider(create: (_) => ShapeViewModel())
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: true,
+        title: 'Shapes for Habits',
+        theme: ThemeData(fontFamily: 'Source Sans Pro'),
+        home: IntroScreen(),
+        onGenerateRoute: router.generateRoute,
+      ),
     );
   }
 }

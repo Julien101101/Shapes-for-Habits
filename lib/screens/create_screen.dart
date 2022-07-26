@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:swipe/swipe.dart';
 import 'package:vs/view%20model/shape_view_model.dart';
 import 'package:vs/widgets/color_on_select.dart';
 import 'package:vs/widgets/lines.dart';
@@ -21,64 +22,65 @@ class _CreateState extends State<Create> {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      body: GestureDetector(onVerticalDragUpdate: (details) {
-        print('drag');
-      }, child: Consumer<ShapeViewModel>(builder: (context, shape, child) {
-        print('name : ${shape.name}');
-        return Padding(
+        body: Consumer<ShapeViewModel>(builder: (context, shape, child) {
+      return Swipe(
+        onSwipeDown: () {
+          setState(() {
+            print('drag');
+          });
+        },
+        child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Flexible(
-                    flex: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Shape(),
-                    )),
-                Flexible(
-                    flex: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ColorOnSelect(),
-                    )),
-                shape.name.contains('polygon')
-                    ? Flexible(
-                        flex: 1,
-                        child: InkWell(
-                          onTap: () async {
-                            shape.incrementCounter();
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Polygon(
-                                sides: shape.counter, color: shape.color),
-                          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Flexible(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Shape(),
+                  )),
+              Flexible(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ColorOnSelect(),
+                  )),
+              shape.name.contains('polygon')
+                  ? Flexible(
+                      flex: 1,
+                      child: InkWell(
+                        onTap: () async {
+                          shape.incrementCounter();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child:
+                              Polygon(sides: shape.counter, color: shape.color),
                         ),
-                      )
-                    : shape.name.contains('lines')
-                        ? Flexible(
-                            flex: 1,
-                            child: InkWell(
-                              onTap: () async {
-                                shape.incrementLine();
-                              },
-                              child: Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Lines(
-                                    length: shape.linecounter,
-                                    color: shape.color),
-                              ),
+                      ),
+                    )
+                  : shape.name.contains('lines')
+                      ? Flexible(
+                          flex: 1,
+                          child: InkWell(
+                            onTap: () async {
+                              shape.incrementLine();
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Lines(
+                                  length: shape.linecounter,
+                                  color: shape.color),
                             ),
-                          )
-                        : Flexible(child: Container())
-              ],
-            ),
+                          ),
+                        )
+                      : Flexible(child: Container())
+            ],
           ),
-        );
-      })),
-    );
+        ),
+      );
+    }));
   }
 }

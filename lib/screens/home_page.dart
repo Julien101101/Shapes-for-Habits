@@ -2,7 +2,6 @@ import 'package:easy_dialog/easy_dialog.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sizer/sizer.dart';
 import 'package:vs/screens/name_screen.dart';
 import 'package:vs/util/app_colors.dart';
 import 'package:vs/widgets/bullet.dart';

@@ -1,5 +1,7 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
+import 'package:vs/util/dimensions.dart';
 
 class Lines extends StatelessWidget {
   Lines({Key? key, required this.length, required this.color})
@@ -18,8 +20,8 @@ class Lines extends StatelessWidget {
             child: Divider(
               color: color,
               thickness: 5,
-              height: 1.h,
-              endIndent: 10.h,
+              height: DeviceDimension.screenHeight * 0.01,
+              endIndent: DeviceDimension.screenHeight * 0.1,
             ),
           );
         },

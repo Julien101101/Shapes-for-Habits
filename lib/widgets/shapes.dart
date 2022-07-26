@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sizer/sizer.dart';
 import 'package:vs/view%20model/shape_view_model.dart';
 import 'package:vs/widgets/bullet.dart';
 
@@ -60,7 +59,7 @@ class _ShapeState extends State<Shape> {
             padding: const EdgeInsets.all(15.0), //symmetric.(horizontal)
             child: Text(name,
                 style: TextStyle(
-                  fontFamily: 'Quicksand',
+                  fontFamily: 'Source Sans Pro',
                   fontSize: MediaQuery.of(context).size.height * 0.1,
                   color: selected ? Colors.orange[400] : Colors.grey,
                 )),
