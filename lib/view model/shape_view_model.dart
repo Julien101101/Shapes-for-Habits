@@ -33,6 +33,8 @@ class ShapeViewModel extends BaseViewModel {
   String get name => _name;
   Color _color = Colors.red;
   Color get color => _color;
+  final TextEditingController nameTextEditingController =
+      TextEditingController();
 
   void setColor(Color color) {
     _color = color;
@@ -57,19 +59,18 @@ class ShapeViewModel extends BaseViewModel {
   saveHabits(
     String userId,
     String objectType,
-    String objectName,
     int count,
   ) {
     Habits habits = Habits(
         userId: userId,
-        objectName: objectName,
+        objectName: nameTextEditingController.text,
         objectType: objectType,
-        color: _color.toString(),
+        color: _color.value,
         count: count);
     ref.add(habits.toJson());
   }
 
-  List habits = [];
+  List<Habits> habits = [];
   getHabit(String userID) async {
     ref.where('userId', isEqualTo: userID).snapshots().listen((snapshot) {
       if (snapshot.docs.isNotEmpty) {

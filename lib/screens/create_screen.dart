@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:swipe/swipe.dart';
+import 'package:vs/util/validators.dart';
 import 'package:vs/view%20model/shape_view_model.dart';
 import 'package:vs/widgets/color_on_select.dart';
+import 'package:vs/widgets/input_field.dart';
 import 'package:vs/widgets/lines.dart';
 import 'package:vs/widgets/polygon.dart';
 import 'package:vs/widgets/shapes.dart';
@@ -16,6 +18,7 @@ class Create extends StatefulWidget {
 
 class _CreateState extends State<Create> {
   String name = '';
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -31,53 +34,50 @@ class _CreateState extends State<Create> {
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Flexible(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Center(
+                    child: RoundedInputField(
+                  hintText: 'Name',
+                  labelText: 'Name',
+                  textEditingController: shape.nameTextEditingController,
+                  validator: Validators().validateNotEmpty,
+                )),
+                Flexible(
+                    flex: 1,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ColorOnSelect(),
+                    )),
+                Flexible(
                   flex: 1,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Shape(),
-                  )),
-              Flexible(
-                  flex: 1,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ColorOnSelect(),
-                  )),
-              shape.name.contains('polygon')
-                  ? Flexible(
-                      flex: 1,
-                      child: InkWell(
-                        onTap: () async {
-                          shape.incrementCounter();
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child:
-                              Polygon(sides: shape.counter, color: shape.color),
-                        ),
-                      ),
-                    )
-                  : shape.name.contains('lines')
-                      ? Flexible(
-                          flex: 1,
-                          child: InkWell(
-                            onTap: () async {
-                              shape.incrementLine();
-                            },
-                            child: Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Lines(
-                                  length: shape.linecounter,
-                                  color: shape.color),
-                            ),
-                          ),
-                        )
-                      : Flexible(child: Container())
-            ],
+                  child: InkWell(
+                    onTap: () async {
+                      shape.incrementCounter();
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Polygon(sides: shape.counter, color: shape.color),
+                    ),
+                  ),
+                ),
+                Flexible(
+                    child: ElevatedButton(
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      await shape.saveHabits(
+                          'userId', shape.name, shape.counter);
+                    }
+                    Navigator.of(context).pushReplacementNamed('home');
+                  },
+                  child: Text('Create'),
+                )),
+              ],
+            ),
           ),
         ),
       );

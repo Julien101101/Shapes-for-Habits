@@ -1,9 +1,11 @@
 import 'package:easy_dialog/easy_dialog.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vs/screens/name_screen.dart';
 import 'package:vs/util/app_colors.dart';
+import 'package:vs/view%20model/shape_view_model.dart';
 import 'package:vs/widgets/bullet.dart';
 import 'package:vs/widgets/color_on_select.dart';
 import 'package:vs/widgets/drawer.dart';
@@ -58,23 +60,41 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
         key: _scaffoldKey,
         drawer: AppDrawer(),
-        body: GestureDetector(
-            onVerticalDragUpdate: (details) {
-              print('drag');
-            },
-            child: Column(children: [
-              Container(
-                alignment: Alignment.topLeft,
-                child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: IconButton(
-                      icon: Icon(Icons.menu, size: 30),
-                      onPressed: () {
-                        _scaffoldKey.currentState!.openDrawer();
-                      },
-                    )),
-              ),
-            ])));
+        body: Consumer<ShapeViewModel>(builder: (context, shape, child) {
+          shape.getHabit('userId');
+          return GestureDetector(
+              onVerticalDragUpdate: (details) {
+                print('drag');
+              },
+              child: Column(children: [
+                Container(
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: IconButton(
+                        icon: Icon(Icons.menu, size: 30),
+                        onPressed: () {
+                          _scaffoldKey.currentState!
+                              .openDrawer(); //drawer remove later
+                        },
+                      )),
+                ),
+                ListView.builder(
+                    itemCount: shape.habits.length,
+                    itemBuilder: ((context, index) {
+                      return Column(
+                        children: [
+                          Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Polygon(
+                                sides: shape.habits[index].count,
+                                color: Color(shape.habits[index].color),
+                              )),
+                        ],
+                      );
+                    }))
+              ]));
+        }));
   }
 
   showAlert(BuildContext context) {

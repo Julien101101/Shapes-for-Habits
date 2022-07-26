@@ -4,7 +4,7 @@ class Habits {
   late final String userId;
   late final String objectName;
   late final String objectType;
-  late final String color;
+  late final int color;
   late final int count;
 
   Habits({
