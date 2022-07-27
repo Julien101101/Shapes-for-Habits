@@ -36,8 +36,8 @@ class _CreateState extends State<Create> {
           child: Form(
             key: _formKey,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
               children: [
                 Center(
                     child: RoundedInputField(
@@ -46,12 +46,7 @@ class _CreateState extends State<Create> {
                   textEditingController: shape.nameTextEditingController,
                   validator: Validators().validateNotEmpty,
                 )),
-                Flexible(
-                    flex: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ColorOnSelect(),
-                    )),
+                
                 Flexible(
                   flex: 1,
                   child: InkWell(

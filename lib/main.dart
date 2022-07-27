@@ -11,10 +11,8 @@ import 'screens/home_page.dart';
 import './util/router.dart' as router;
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized;
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 

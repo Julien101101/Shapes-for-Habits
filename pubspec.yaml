@@ -35,7 +35,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_polygon: ^0.3.0+2
   shared_preferences: ^2.0.15
-  google_fonts: ^2.3.1
   provider: ^6.0.2
   firebase_core: ^1.19.2
   firebase_analytics: ^9.2.0
@@ -50,6 +49,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner:
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

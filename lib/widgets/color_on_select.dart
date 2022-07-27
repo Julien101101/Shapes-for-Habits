@@ -8,11 +8,11 @@ class ColorOnSelect extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('check');
     Size size = MediaQuery.of(context).size;
     ShapeViewModel shapeViewModel = context.read<ShapeViewModel>();
     return Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: size.height * 0.15),
+      padding: EdgeInsets.symmetric(vertical: size.height * 0.15),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -27,7 +27,6 @@ class ColorOnSelect extends StatelessWidget {
                   crossAxisCount: 3,
                 ),
                 itemCount: shapeViewModel.colors.length,
-                physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (BuildContext context, int index) {
                   return InkWell(
                     onTap: () {

@@ -34,19 +34,20 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  late SharedPreferences sharedPreferences;
+  SharedPreferences? sharedPreferences;
   bool _isFirstTime = false;
   String? id;
   @override
   void initState() {
     initSharedPref();
+    Future.microtask(() => context.read<ShapeViewModel>().getHabit('userId'));
     super.initState();
   }
 
   initSharedPref() async {
-    id = sharedPreferences.getString('id');
-    print('initSharedPref');
     sharedPreferences = await SharedPreferences.getInstance();
+    id = sharedPreferences!.getString('id');
+    print('initSharedPref');
   }
 
   @override
@@ -61,7 +62,6 @@ class _MyHomePageState extends State<MyHomePage> {
         key: _scaffoldKey,
         drawer: AppDrawer(),
         body: Consumer<ShapeViewModel>(builder: (context, shape, child) {
-          shape.getHabit('userId');
           return GestureDetector(
               onVerticalDragUpdate: (details) {
                 print('drag');
@@ -83,11 +83,15 @@ class _MyHomePageState extends State<MyHomePage> {
                   ListView.builder(
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: shape.habits.length,
                       itemBuilder: ((context, index) {
                         return Column(
                           children: [
                             Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
                                 height: size.height * 0.3,
                                 padding: const EdgeInsets.all(8.0),
                                 child: Polygon(

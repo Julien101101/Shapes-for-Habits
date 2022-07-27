@@ -1,5 +1,5 @@
 class Constant {
-  static const String _IMG_PATH = 'images/';
+  static const String _IMG_PATH = 'assets/images/';
   static const String IMG_1 = _IMG_PATH + 'img_1.png';
   static const String IMG_2 = _IMG_PATH + 'img_2.png';
   static const String IMG_3 = _IMG_PATH + 'img_3.png';
