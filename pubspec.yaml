@@ -43,7 +43,6 @@ dependencies:
   cloud_firestore: ^3.3.0
   flutter_svg: ^1.1.1+1
   flutter_onboard: ^2.0.0
-  easy_dialog: ^1.1.0
   swipe: ^0.0.1
 
 dev_dependencies:
