@@ -46,7 +46,6 @@ class _CreateState extends State<Create> {
                   textEditingController: shape.nameTextEditingController,
                   validator: Validators().validateNotEmpty,
                 )),
-                
                 Flexible(
                   flex: 1,
                   child: InkWell(

@@ -17,7 +17,6 @@ class PolygonState extends State<Polygon> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: Alignment.center,
       /*padding: EdgeInsets.symmetric(
                     vertical: MediaQuery.of(context).size.height * 0.2,
                     horizontal: MediaQuery.of(context).size.width * 0.3,
@@ -26,6 +25,7 @@ class PolygonState extends State<Polygon> {
       width: MediaQuery.of(context).size.width * 1,
       child: Center(
         child: ClipPolygon(
+          
           sides: widget.sides,
           borderRadius: 0.0, // Default 0.0 degrees
           rotate: 0.0, // Default 0.0 degrees

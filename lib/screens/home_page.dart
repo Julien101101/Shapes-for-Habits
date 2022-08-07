@@ -1,9 +1,8 @@
-import 'package:easy_dialog/easy_dialog.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vs/screens/name_screen.dart';
+import 'package:vs/screens/shape_screen.dart';
 import 'package:vs/util/app_colors.dart';
 import 'package:vs/view%20model/shape_view_model.dart';
 import 'package:vs/widgets/bullet.dart';
@@ -17,17 +16,8 @@ import 'package:vs/widgets/swipe_logic.dart';
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
-
+  
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -86,24 +76,57 @@ class _MyHomePageState extends State<MyHomePage> {
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: shape.habits.length,
                       itemBuilder: ((context, index) {
-                        return Column(
-                          children: [
-                            Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                height: size.height * 0.3,
-                                padding: const EdgeInsets.all(8.0),
-                                child: Polygon(
-                                  sides: shape.habits[index].count,
-                                  color: Color(shape.habits[index].color),
-                                )),
-                            Text(shape.habits[index].objectName,
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black)),
-                          ],
+                        return InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ShapeScreen(
+                                          habit: shape.habits[index],
+                                        )));
+                          },
+                          child: Container(
+                              height: size.height * 0.2,
+                              margin: const EdgeInsets.symmetric(
+                                vertical: 16.0,
+                                horizontal: 24.0,
+                              ),
+                              child: Stack(
+                                children: <Widget>[
+                                  Container(
+                                    height: size.height * 0.3,
+                                    margin: EdgeInsets.only(left: 0.0),
+                                    decoration: BoxDecoration(
+                                      color: Color.fromARGB(255, 255, 255, 255),
+                                      shape: BoxShape.rectangle,
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      boxShadow: <BoxShadow>[
+                                        BoxShadow(
+                                          color: Colors.black12,
+                                          blurRadius: 10.0,
+                                          offset: Offset(0.0, 10.0),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                      margin:
+                                          EdgeInsets.symmetric(vertical: 16.0),
+                                      alignment: FractionalOffset.centerLeft,
+                                      child: Polygon(
+                                        sides: shape.habits[index].count,
+                                        color: Color(shape.habits[index].color),
+                                      )),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(shape.habits[index].objectName,
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black)),
+                                  ),
+                                ],
+                              )),
                         );
                       }))
                 ]),

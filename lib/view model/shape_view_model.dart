@@ -74,10 +74,11 @@ class ShapeViewModel extends BaseViewModel {
   getHabit(String userID) async {
     ref.where('userId', isEqualTo: userID).snapshots().listen((snapshot) {
       if (snapshot.docs.isNotEmpty) {
-        var _habits = snapshot.docs
+        var habits = snapshot.docs
             .map((e) => Habits.fromJson(jsonDecode(jsonEncode(e.data()))))
             .toList();
-        habits = [..._habits];
+        habits = [...habits];
+        print('habits: $habits');
         notifyListeners();
       }
     });
