@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vs/screens/logo_screen.dart';
+import 'package:vs/screens/sign_up_screen.dart';
 import 'package:vs/screens/splash.dart';
 import 'package:vs/view%20model/shape_view_model.dart';
 import 'package:vs/view%20model/user_view_model.dart';
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: true,
         title: 'Shapes for Habits',
         theme: ThemeData(fontFamily: 'Quicksand'),
-        home: SplashScreen(),
+        home: SignUpScreen(),
         onGenerateRoute: router.generateRoute,
       ),
     );

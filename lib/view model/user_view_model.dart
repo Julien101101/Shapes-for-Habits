@@ -43,11 +43,13 @@ class UserViewModel extends BaseViewModel {
           email: email, password: password);
       if (user != null) {
         Model model = Model(
+          email: email,
           name: name,
           id: user.user!.uid,
         );
         await ref.doc(user.user!.uid).set(model.toJson());
         setLoading();
+        return true;
       }
     } catch (e) {
       return e.toString();
