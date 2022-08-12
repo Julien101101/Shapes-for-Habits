@@ -18,45 +18,44 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
     _controller = PersistentTabController(
-      initialIndex: 0,
+      initialIndex: 1,
     );
+    _buildscreens.add(ProfileScreen());
     _buildscreens.add(MyHomePage(
       title: 'Home',
     ));
-    _buildscreens.add(ProfileScreen());
     _buildscreens.add(CalendarPage());
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-          icon: Icon(Icons.category_sharp),
-          title: 'Home',
-          activeColorPrimary: Colors.black,
-          inactiveColorPrimary: Colors.grey),
-      PersistentBottomNavBarItem(
           icon: Icon(Icons.person),
           title: 'Profile',
-          activeColorPrimary: Colors.black,
+          activeColorPrimary: Colors.blue,
+          inactiveColorPrimary: Colors.grey),
+      PersistentBottomNavBarItem(
+          icon: Icon(Icons.category_sharp),
+          title: 'Home',
+          activeColorPrimary: Colors.blue,
           inactiveColorPrimary: Colors.grey),
       PersistentBottomNavBarItem(
           icon: Icon(Icons.calendar_month),
           title: 'Calendar',
-          activeColorPrimary: Colors.black,
+          activeColorPrimary: Colors.blue,
           inactiveColorPrimary: Colors.grey),
     ];
   }
 
   @override
   Widget build(BuildContext context) {
-    print('nav');
     return PersistentTabView(
       context,
       controller: _controller,
       screens: _buildscreens,
       items: _navBarsItems(),
       confineInSafeArea: true,
-      backgroundColor: Colors.blue, // Default is Colors.white.
+      backgroundColor: Colors.white, // Default is Colors.white.
       handleAndroidBackButtonPress: true, // Default is true.
       resizeToAvoidBottomInset:
           true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
@@ -64,8 +63,7 @@ class _MainScreenState extends State<MainScreen> {
       hideNavigationBarWhenKeyboardShows:
           true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
       decoration: NavBarDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        colorBehindNavBar: Colors.white,
+        colorBehindNavBar: Colors.blue,
       ),
       popAllScreensOnTapOfSelectedTab: true,
       popActionScreens: PopActionScreensType.all,
@@ -81,7 +79,7 @@ class _MainScreenState extends State<MainScreen> {
         duration: Duration(milliseconds: 200),
       ),
       navBarStyle:
-          NavBarStyle.style1, // Choose the nav bar style with this property.
+          NavBarStyle.style13, // Choose the nav bar style with this property.
     );
   }
 }

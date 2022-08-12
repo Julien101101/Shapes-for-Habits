@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:vs/util/app_colors.dart';
 import 'package:vs/util/dimensions.dart';
 
-
 class RoundedInputField extends StatefulWidget {
   final String? hintText;
   final IconData icon;
@@ -49,6 +48,7 @@ class _RoundedInputFieldState extends State<RoundedInputField> {
 
   @override
   Widget build(BuildContext context) {
+    DeviceDimension.init(context: context);
     return Column(
       children: [
         SizedBox(
@@ -91,21 +91,23 @@ class _RoundedInputFieldState extends State<RoundedInputField> {
             border: const OutlineInputBorder(),
             suffixIcon: widget.obscureText
                 ? IconButton(
-                icon: _obscureText
-                    ? const Icon(
-                  Icons.visibility_off,
-                  color: Colors.grey,
-                )
-                    : const Icon(
-                  Icons.visibility,
-                  color: Colors.grey,
-                ),
-                onPressed: () {
-                  setState(() {
-                    _obscureText = !_obscureText;
-                  });
-                })
-                : const SizedBox(),
+                    icon: _obscureText
+                        ? const Icon(
+                            Icons.visibility_off,
+                            color: Colors.grey,
+                          )
+                        : const Icon(
+                            Icons.visibility,
+                            color: Colors.grey,
+                          ),
+                    onPressed: () {
+                      setState(() {
+                        _obscureText = !_obscureText;
+                      });
+                    })
+                : const SizedBox(
+                    height: 0.1,
+                  ),
             labelText: widget.labelText,
           ),
         ),

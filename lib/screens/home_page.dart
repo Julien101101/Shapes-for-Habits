@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:vs/screens/name_screen.dart';
+import 'package:vs/screens/create_screen.dart';
 import 'package:vs/screens/shape_screen.dart';
 import 'package:vs/util/app_colors.dart';
 import 'package:vs/view%20model/shape_view_model.dart';
@@ -29,8 +30,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     initSharedPref();
-    Future.microtask(() => context.read<ShapeViewModel>().getHabit('userId'));
     super.initState();
+    Future.microtask(() => context.read<ShapeViewModel>().getHabit());
   }
 
   initSharedPref() async {
@@ -56,78 +57,91 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: SingleChildScrollView(
                 child: Column(children: [
-                  ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: shape.habits.length,
-                      itemBuilder: ((context, index) {
-                        return InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ShapeScreen(
-                                          habit: shape.habits[index],
-                                        )));
-                          },
-                          child: Container(
-                              height: size.height * 0.2,
-                              margin: const EdgeInsets.symmetric(
-                                vertical: 16.0,
-                                horizontal: 24.0,
-                              ),
-                              child: Stack(
-                                children: <Widget>[
-                                  Container(
-                                    height: size.height * 0.3,
-                                    margin: EdgeInsets.only(left: 0.0),
-                                    decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 255, 255, 255),
-                                      shape: BoxShape.rectangle,
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      boxShadow: <BoxShadow>[
-                                        BoxShadow(
-                                          color: Colors.black12,
-                                          blurRadius: 10.0,
-                                          offset: Offset(0.0, 10.0),
+                  Container(
+                    padding: shape.habits.isEmpty
+                        ? EdgeInsets.only(top: size.height * 0.3)
+                        : EdgeInsets.only(top: size.height * 0.1),
+                    child: FloatingActionButton(
+                      onPressed: () {
+                        pushNewScreen(context, screen: CreateScreen());
+                      },
+                      child: Icon(Icons.add),
+                    ),
+                  ),
+                  shape.habits.isEmpty
+                      ? Container(
+                          alignment: Alignment.center,
+                          child: Text('Create a new habit',
+                              style: TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey)))
+                      : ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: shape.habits.length,
+                          itemBuilder: ((context, index) {
+                            return InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ShapeScreen(
+                                              habit: shape.habits[index],
+                                            )));
+                              },
+                              child: Container(
+                                  height: size.height * 0.2,
+                                  margin: const EdgeInsets.symmetric(
+                                    vertical: 16.0,
+                                    horizontal: 24.0,
+                                  ),
+                                  child: Stack(
+                                    children: <Widget>[
+                                      Container(
+                                        height: size.height * 0.3,
+                                        margin: EdgeInsets.only(left: 0.0),
+                                        decoration: BoxDecoration(
+                                          color: Color.fromARGB(
+                                              255, 255, 255, 255),
+                                          shape: BoxShape.rectangle,
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                          boxShadow: <BoxShadow>[
+                                            BoxShadow(
+                                              color: Colors.black12,
+                                              blurRadius: 10.0,
+                                              offset: Offset(0.0, 10.0),
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                      margin:
-                                          EdgeInsets.symmetric(vertical: 16.0),
-                                      alignment: FractionalOffset.centerLeft,
-                                      child: Polygon(
-                                        sides: shape.habits[index].count,
-                                        color: Color(shape.habits[index].color),
-                                      )),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(shape.habits[index].objectName,
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black)),
-                                  ),
-                                ],
-                              )),
-                        );
-                      }))
+                                      ),
+                                      Container(
+                                          margin: EdgeInsets.symmetric(
+                                              vertical: 16.0),
+                                          alignment:
+                                              FractionalOffset.centerLeft,
+                                          child: Polygon(
+                                            sides: shape.habits[index].count,
+                                            color: Color(
+                                                shape.habits[index].color),
+                                          )),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                            shape.habits[index].objectName,
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black)),
+                                      ),
+                                    ],
+                                  )),
+                            );
+                          }))
                 ]),
               ));
         }));
-  }
-
-  showAlert(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-              title: Text('Enter your name'), // TODO: change to only 1
-              content:
-                  Container(height: size.height * 0.3, child: NameScreen()),
-            ));
   }
 }

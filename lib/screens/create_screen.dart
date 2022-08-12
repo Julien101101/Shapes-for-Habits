@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:swipe/swipe.dart';
+import 'package:vs/screens/home_page.dart';
 import 'package:vs/util/validators.dart';
 import 'package:vs/view%20model/shape_view_model.dart';
 import 'package:vs/widgets/color_on_select.dart';
@@ -8,14 +10,14 @@ import 'package:vs/widgets/input_field.dart';
 import 'package:vs/widgets/polygon.dart';
 import 'package:vs/widgets/shapes.dart';
 
-class Create extends StatefulWidget {
-  const Create({Key? key}) : super(key: key);
+class CreateScreen extends StatefulWidget {
+  const CreateScreen({Key? key}) : super(key: key);
 
   @override
-  State<Create> createState() => _CreateState();
+  State<CreateScreen> createState() => _CreateState();
 }
 
-class _CreateState extends State<Create> {
+class _CreateState extends State<CreateScreen> {
   String name = '';
   final _formKey = GlobalKey<FormState>();
 
@@ -64,7 +66,7 @@ class _CreateState extends State<Create> {
                     if (_formKey.currentState!.validate()) {
                       await shape.saveHabits(shape.name, shape.counter);
                     }
-                    Navigator.of(context).pushReplacementNamed('home');
+                    pushNewScreen(context, screen: MyHomePage(title: 'Home'));
                   },
                   child: Text('Create'),
                 )),
