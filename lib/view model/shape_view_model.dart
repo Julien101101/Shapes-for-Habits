@@ -57,12 +57,13 @@ class ShapeViewModel extends BaseViewModel {
   }
 
   saveHabits(
-    String userId,
     String objectType,
     int count,
   ) {
+    var user = auth.currentUser;
+
     Habits habits = Habits(
-        userId: userId,
+        userId: user!.uid,
         objectName: nameTextEditingController.text,
         objectType: objectType,
         color: _color.value,
@@ -72,7 +73,9 @@ class ShapeViewModel extends BaseViewModel {
 
   List<Habits> habits = [];
   getHabit(String userID) async {
-    ref.where('userId', isEqualTo: userID).snapshots().listen((snapshot) {
+    var user = auth.currentUser;
+    print(user);
+    ref.where('userId', isEqualTo: user!.uid).snapshots().listen((snapshot) {
       if (snapshot.docs.isNotEmpty) {
         var habits = snapshot.docs
             .map((e) => Habits.fromJson(jsonDecode(jsonEncode(e.data()))))

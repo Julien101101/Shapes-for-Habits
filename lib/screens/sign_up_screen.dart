@@ -98,7 +98,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               color: Colors.white,
                                               fontSize: 16.0))));
                               Navigator.pushNamedAndRemoveUntil(
-                                  context, "home", (route) => false);
+                                  context, "main", (route) => false);
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(

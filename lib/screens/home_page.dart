@@ -11,13 +11,12 @@ import 'package:vs/widgets/drawer.dart';
 import 'package:vs/widgets/lines.dart';
 import 'package:vs/widgets/polygon.dart';
 import 'package:vs/widgets/shapes.dart';
-import 'package:vs/widgets/swipe_logic.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
-  
+
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -50,7 +49,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
         key: _scaffoldKey,
-        drawer: AppDrawer(),
         body: Consumer<ShapeViewModel>(builder: (context, shape, child) {
           return GestureDetector(
               onVerticalDragUpdate: (details) {
@@ -58,18 +56,6 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: SingleChildScrollView(
                 child: Column(children: [
-                  Container(
-                    alignment: Alignment.topLeft,
-                    child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: IconButton(
-                          icon: Icon(Icons.menu, size: 30),
-                          onPressed: () {
-                            _scaffoldKey.currentState!
-                                .openDrawer(); //drawer remove later
-                          },
-                        )),
-                  ),
                   ListView.builder(
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
