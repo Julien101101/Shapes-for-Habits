@@ -22,7 +22,11 @@ class UserViewModel extends BaseViewModel {
 
   Future<bool> isUserLoggedIn() async {
     var user = auth.currentUser;
-    return user != null;
+    if (user != null) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   String getRandom(int length) {

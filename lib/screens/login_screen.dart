@@ -79,7 +79,7 @@ class _nameState extends State<LoginScreen> {
                                               color: Colors.white,
                                               fontSize: 16.0))));
                               Navigator.pushNamedAndRemoveUntil(
-                                  context, "home", (route) => false);
+                                  context, "main", (route) => false);
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(

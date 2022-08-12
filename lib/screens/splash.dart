@@ -16,10 +16,11 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Future.microtask(
         () => context.read<UserViewModel>().isUserLoggedIn().then((value) {
+              print(value);
               if (value) {
                 Future.delayed(const Duration(seconds: 2), () {
                   Navigator.pushNamedAndRemoveUntil(
-                      context, "home", (route) => false);
+                      context, "main", (route) => false);
                 });
               } else {
                 Future.delayed(const Duration(seconds: 3), () {

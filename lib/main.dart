@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: true,
         title: 'Shapes for Habits',
         theme: ThemeData(fontFamily: 'Quicksand'),
-        home: SignUpScreen(),
+        home: SplashScreen(),
         onGenerateRoute: router.generateRoute,
       ),
     );

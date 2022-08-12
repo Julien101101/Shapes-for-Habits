@@ -62,8 +62,7 @@ class _CreateState extends State<Create> {
                     child: ElevatedButton(
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      await shape.saveHabits(
-                          'userId', shape.name, shape.counter);
+                      await shape.saveHabits(shape.name, shape.counter);
                     }
                     Navigator.of(context).pushReplacementNamed('home');
                   },
