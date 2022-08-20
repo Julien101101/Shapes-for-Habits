@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
+import 'package:provider/provider.dart';
 import 'package:vs/models/habits.dart';
+import 'package:vs/screens/home_page.dart';
+import 'package:vs/view%20model/shape_view_model.dart';
 import 'package:vs/widgets/polygon.dart';
 
 class ShapeScreen extends StatelessWidget {
@@ -8,6 +12,7 @@ class ShapeScreen extends StatelessWidget {
   const ShapeScreen({super.key, required this.habit});
   @override
   Widget build(BuildContext context) {
+    ShapeViewModel shapeViewModel = context.read<ShapeViewModel>();
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Column(
@@ -31,7 +36,13 @@ class ShapeScreen extends StatelessWidget {
                   Icons.delete,
                   color: Colors.black,
                 ),
-                onPressed: () {},
+                onPressed: () async {
+                  await shapeViewModel.deleteHabit(habit.id!);
+                  pushNewScreen(context,
+                      screen: MyHomePage(
+                        title: 'Home',
+                      ));
+                },
               ),
             ),
             /*child: Row(

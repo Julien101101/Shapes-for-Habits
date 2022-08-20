@@ -8,7 +8,6 @@ import 'package:vs/util/app_colors.dart';
 import 'package:vs/view%20model/shape_view_model.dart';
 import 'package:vs/widgets/bullet.dart';
 import 'package:vs/widgets/color_on_select.dart';
-import 'package:vs/widgets/drawer.dart';
 import 'package:vs/widgets/lines.dart';
 import 'package:vs/widgets/polygon.dart';
 import 'package:vs/widgets/shapes.dart';
@@ -71,11 +70,17 @@ class _MyHomePageState extends State<MyHomePage> {
                   shape.habits.isEmpty
                       ? Container(
                           alignment: Alignment.center,
-                          child: Text('Create a new habit',
-                              style: TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey)))
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 20.0),
+                              child: Text('Create a new habit',
+                                  style: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.grey)),
+                            ),
+                          ))
                       : ListView.builder(
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,

@@ -37,40 +37,103 @@ class _CreateState extends State<CreateScreen> {
           padding: const EdgeInsets.all(8.0),
           child: Form(
             key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Center(
-                    child: RoundedInputField(
-                  hintText: 'Name',
-                  labelText: 'Name',
-                  textEditingController: shape.nameTextEditingController,
-                  validator: Validators().validateNotEmpty,
-                )),
-                Flexible(
-                  flex: 1,
-                  child: InkWell(
-                    onTap: () async {
-                      shape.incrementCounter();
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Polygon(sides: shape.counter, color: shape.color),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ListTile(
+                    leading: IconButton(
+                      icon: Icon(
+                        Icons.arrow_back,
+                        color: Colors.black,
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                     ),
                   ),
-                ),
-                Flexible(
-                    child: ElevatedButton(
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      await shape.saveHabits(shape.name, shape.counter);
-                    }
-                    pushNewScreen(context, screen: MyHomePage(title: 'Home'));
-                  },
-                  child: Text('Create'),
-                )),
-              ],
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: MediaQuery.of(context).size.width * 0.2,
+                        vertical: MediaQuery.of(context).size.height * 0.05),
+                    child: Center(
+                      child: TextFormField(
+                        controller: shape.nameTextEditingController,
+                        validator: Validators().validateNotEmpty,
+                        decoration: InputDecoration(
+                          labelText: 'Habit Name',
+                          labelStyle: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: 2,
+                            color: Colors.black,
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.blue),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  MediaQuery.removePadding(
+                    context: context,
+                    removeTop: true,
+                    child: GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                      ),
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: shape.colors.length,
+                      shrinkWrap: true,
+                      itemBuilder: (BuildContext context, int index) {
+                        return InkWell(
+                          onTap: () {
+                            shape.setColor(shape.colors[index]);
+                          },
+                          child: GridTile(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: shape.colors[index],
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  Flexible(
+                    flex: 1,
+                    child: InkWell(
+                      onTap: () async {
+                        shape.incrementCounter();
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child:
+                            Polygon(sides: shape.counter, color: shape.color),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Flexible(
+                      child: ElevatedButton(
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        await shape.saveHabits(shape.name, shape.counter);
+                      }
+                      pushNewScreen(context, screen: MyHomePage(title: 'Home'));
+                    },
+                    child: Text('Create'),
+                  )),
+                ],
+              ),
             ),
           ),
         ),

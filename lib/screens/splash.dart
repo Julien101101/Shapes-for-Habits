@@ -13,11 +13,9 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Future.microtask(
         () => context.read<UserViewModel>().isUserLoggedIn().then((value) {
-              print(value);
               if (value) {
                 Future.delayed(const Duration(seconds: 2), () {
                   Navigator.pushNamedAndRemoveUntil(

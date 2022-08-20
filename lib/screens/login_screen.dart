@@ -22,92 +22,112 @@ class _nameState extends State<LoginScreen> {
         children: [
           Container(
             child: Center(child: SvgPicture.asset(Constant.IMG_4)),
-            color: Colors.green,
-            height: MediaQuery.of(context).size.height * 0.42,
+            color: Colors.blue,
+            height: MediaQuery.of(context).size.height * 0.45,
           ),
           Form(
             key: _signUpFormKey,
-            child: Column(
-              children: [
-                Text(
-                  'Login',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 20,
                   ),
-                ),
-                TextFormField(
-                  controller: _userViewModel.emailTextEditingController,
-                  validator: Validators().validateEmail,
-                  decoration: InputDecoration(
-                    labelText: 'Email',
-                    labelStyle: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
-                TextFormField(
-                  controller: _userViewModel.passwordTextEditingController,
-                  validator: Validators().validateNotEmpty,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    labelStyle: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                _userViewModel.loading
-                    ? Center(child: CircularProgressIndicator())
-                    : InkWell(
-                        onTap: () async {
-                          if (_signUpFormKey.currentState!.validate()) {
-                            var response = await _userViewModel.loginUser();
-                            if (response == true) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      behavior: SnackBarBehavior.floating,
-                                      backgroundColor: Colors.green,
-                                      duration: Duration(milliseconds: 2500),
-                                      content: Text('Login Successful',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16.0))));
-                              Navigator.pushNamedAndRemoveUntil(
-                                  context, "main", (route) => false);
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      behavior: SnackBarBehavior.floating,
-                                      backgroundColor: Colors.red,
-                                      duration: Duration(milliseconds: 2500),
-                                      content: Text('$response',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16.0))));
-                            }
-                          }
-                        },
-                        child: Text('Login',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.black,
-                              decoration: TextDecoration.underline,
-                            )),
+                  // Text(
+                  //   'Login',
+                  //   textAlign: TextAlign.center,
+                  //   style: TextStyle(
+                  //     fontSize: 30,
+                  //     fontWeight: FontWeight.bold,
+                  //   ),
+                  // ),
+                  TextFormField(
+                    controller: _userViewModel.emailTextEditingController,
+                    decoration: InputDecoration(
+                      labelText: 'EMAIL',
+                      labelStyle: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 2,
+                        color: Colors.black,
                       ),
-                ListTile(
-                  leading: Text("Don't have an account?"),
-                  trailing: Text('Sign Up'),
-                  onTap: () {
-                    Navigator.pushNamed(context, 'sign_up');
-                  },
-                )
-              ],
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blue),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    validator: Validators().validateNotEmpty,
+                    controller: _userViewModel.passwordTextEditingController,
+                    decoration: InputDecoration(
+                      labelText: 'PASSWORD',
+                      labelStyle: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 2,
+                        color: Colors.black,
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blue),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  _userViewModel.loading
+                      ? Center(child: CircularProgressIndicator())
+                      : InkWell(
+                          onTap: () async {
+                            if (_signUpFormKey.currentState!.validate()) {
+                              var response = await _userViewModel.loginUser();
+                              if (response == true) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        behavior: SnackBarBehavior.floating,
+                                        backgroundColor: Colors.green,
+                                        duration: Duration(milliseconds: 2500),
+                                        content: Text(
+                                            'Login Successful',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 16.0))));
+                                Navigator.pushNamedAndRemoveUntil(
+                                    context, "main", (route) => false);
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        behavior: SnackBarBehavior.floating,
+                                        backgroundColor: Colors.red,
+                                        duration: Duration(milliseconds: 2500),
+                                        content: Text(
+                                            '$response',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 16.0))));
+                              }
+                            }
+                          },
+                          child: Text('Login',
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.black,
+                                decoration: TextDecoration.underline,
+                              )),
+                        ),
+                  ListTile(
+                    leading: Text("Don't have an account?"),
+                    trailing: Text('Sign Up'),
+                    onTap: () {
+                      Navigator.pushNamed(context, 'sign_up');
+                    },
+                  )
+                ],
+              ),
             ),
           ),
         ],
