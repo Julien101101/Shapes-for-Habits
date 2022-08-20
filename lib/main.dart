@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ShapeViewModel())
       ],
       child: MaterialApp(
-        debugShowCheckedModeBanner: true,
+        debugShowCheckedModeBanner: false,
         title: 'Shapes for Habits',
         theme: ThemeData(fontFamily: 'Quicksand'),
         home: SplashScreen(),

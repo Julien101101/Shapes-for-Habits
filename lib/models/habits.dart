@@ -1,6 +1,8 @@
-import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Habits {
+  String? id;
+  late final String date;
   late final String userId;
   late final String objectName;
   late final String objectType;
@@ -8,6 +10,8 @@ class Habits {
   late final int count;
 
   Habits({
+    this.id,
+    required this.date,
     required this.userId,
     required this.objectName,
     required this.objectType,
@@ -16,6 +20,8 @@ class Habits {
   });
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['date'] = date;
     _data['userId'] = userId;
     _data['objectName'] = objectName;
     _data['objectType'] = objectType;
@@ -25,6 +31,8 @@ class Habits {
   }
 
   Habits.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    date = json['date'];
     userId = json['userId'];
     objectName = json['objectName'];
     objectType = json['objectType'];

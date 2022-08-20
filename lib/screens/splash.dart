@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:vs/util/constants.dart';
+import 'package:vs/util/dimensions.dart';
 import 'package:vs/view%20model/user_view_model.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -12,11 +13,9 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Future.microtask(
         () => context.read<UserViewModel>().isUserLoggedIn().then((value) {
-              print(value);
               if (value) {
                 Future.delayed(const Duration(seconds: 2), () {
                   Navigator.pushNamedAndRemoveUntil(
@@ -25,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
               } else {
                 Future.delayed(const Duration(seconds: 3), () {
                   Navigator.pushNamedAndRemoveUntil(
-                      context, "login", (route) => false);
+                      context, "login_screen", (route) => false);
                 });
               }
             }));

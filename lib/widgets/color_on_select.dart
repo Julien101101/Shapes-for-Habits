@@ -17,35 +17,34 @@ class ColorOnSelect extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Expanded(
-            child: Container(
-              alignment: Alignment.center,
-              height: size.height * 0.7,
-              width: size.height * 0.7,
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                ),
-                itemCount: shapeViewModel.colors.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return InkWell(
-                    onTap: () {
-                      shapeViewModel.setColor(shapeViewModel.colors[index]);
-                    },
-                    child: GridTile(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: shapeViewModel.colors[index],
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
+          Container(
+            alignment: Alignment.center,
+            height: size.height * 0.7,
+            width: size.height * 0.7,
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+              ),
+              itemCount: shapeViewModel.colors.length,
+              shrinkWrap: true,
+              itemBuilder: (BuildContext context, int index) {
+                return InkWell(
+                  onTap: () {
+                    shapeViewModel.setColor(shapeViewModel.colors[index]);
+                  },
+                  child: GridTile(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: shapeViewModel.colors[index],
+                          borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
                     ),
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             ),
           ),
         ],

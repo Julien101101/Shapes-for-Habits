@@ -11,7 +11,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
     case 'sign_up':
       return MaterialPageRoute(builder: (context) => SignUpScreen());
-    case 'login_screen': 
+    case 'login_screen':
       return MaterialPageRoute(builder: (context) => LoginScreen());
     case 'home':
       return MaterialPageRoute(
@@ -19,12 +19,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
                 title: 'Home Page',
               ));
     case 'create':
-      return MaterialPageRoute(builder: (context) => const Create());
+      return MaterialPageRoute(builder: (context) => const CreateScreen());
     case 'name':
       return MaterialPageRoute(builder: (context) => NameScreen());
     case 'main':
       return MaterialPageRoute(builder: (context) => MainScreen());
-    
+
     default:
       return MaterialPageRoute(
           builder: (context) => const MyHomePage(

@@ -59,31 +59,47 @@ class ShapeViewModel extends BaseViewModel {
   saveHabits(
     String objectType,
     int count,
-  ) {
+  ) async {
     var user = auth.currentUser;
 
     Habits habits = Habits(
+        date: DateTime.now().toString(),
         userId: user!.uid,
         objectName: nameTextEditingController.text,
         objectType: objectType,
         color: _color.value,
         count: count);
-    ref.add(habits.toJson());
+    ref.add(habits.toJson()).then((value) {
+      print(value.id.toString());
+      print(value.toString() + 'added');
+      ref.doc(value.id).set({
+        'id': value.id,
+      }, SetOptions(merge: true));
+    });
   }
 
   List<Habits> habits = [];
-  getHabit(String userID) async {
+  getHabit() async {
     var user = auth.currentUser;
-    print(user);
-    ref.where('userId', isEqualTo: user!.uid).snapshots().listen((snapshot) {
+    ref
+        .where('userId', isEqualTo: user!.uid)
+        .orderBy('date',
+            descending: true) //.orderBy('date', descending: true, location?)
+        .snapshots()
+        .listen((snapshot) {
       if (snapshot.docs.isNotEmpty) {
-        var habits = snapshot.docs
+        print('${snapshot.docs.toString()}');
+        var traits = snapshot.docs
             .map((e) => Habits.fromJson(jsonDecode(jsonEncode(e.data()))))
             .toList();
-        habits = [...habits];
-        print('habits: $habits');
+        habits = [...traits];
         notifyListeners();
       }
     });
+  }
+
+  deleteHabit(String id) async {
+    print(id + ' is deleted');
+    await ref.doc(id).delete();
   }
 }
