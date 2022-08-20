@@ -27,7 +27,6 @@ class _ShapeScreenState extends State<ShapeScreen> {
   @override
   Widget build(BuildContext context) {
     ShapeViewModel shapeViewModel = context.read<ShapeViewModel>();
-
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Column(
