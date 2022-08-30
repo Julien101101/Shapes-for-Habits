@@ -45,29 +45,6 @@ class ShapeScreen extends StatelessWidget {
                 },
               ),
             ),
-            /*child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Expanded(
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.arrow_back,
-                      color: Colors.black,
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ),
-                Expanded(
-                  child: IconButton(
-                    icon: Icon(Icons.delete),
-                    onPressed: () {},
-                  ),
-                ),
-              ],
-            ),*/
           ),
           Container(
               decoration: BoxDecoration(
@@ -75,9 +52,16 @@ class ShapeScreen extends StatelessWidget {
               ),
               height: size.height * 0.3,
               padding: const EdgeInsets.all(8.0),
-              child: Polygon(
-                sides: habit.count,
-                color: Color(habit.color),
+              child: InkWell(
+                onTap: () async {
+                  int count = habit.count;
+                  count++;
+                  await shapeViewModel.editHabit(habit.id!, count);
+                },
+                child: Polygon(
+                  sides: habit.count,
+                  color: Color(habit.color),
+                ),
               )),
           Text(habit.objectName + " : " + habit.count.toString(),
               style: TextStyle(

@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -70,12 +69,17 @@ class ShapeViewModel extends BaseViewModel {
         color: _color.value,
         count: count);
     ref.add(habits.toJson()).then((value) {
-      print(value.id.toString());
-      print(value.toString() + 'added');
       ref.doc(value.id).set({
         'id': value.id,
       }, SetOptions(merge: true));
     });
+    await resetvalues();
+  }
+
+  resetvalues() async {
+    _counter = 3;
+    nameTextEditingController.clear();
+    notifyListeners();
   }
 
   List<Habits> habits = [];
@@ -98,8 +102,16 @@ class ShapeViewModel extends BaseViewModel {
     });
   }
 
+  editHabit(String id, int counter) async {
+    await ref.doc(id).set({
+      'count': counter,
+      
+    }, SetOptions(merge: true));
+  }
+  
+
   deleteHabit(String id) async {
-    print(id + ' is deleted');
     await ref.doc(id).delete();
+    notifyListeners();
   }
 }

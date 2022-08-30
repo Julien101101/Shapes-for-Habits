@@ -14,6 +14,7 @@ import './util/router.dart' as router;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
+    name: 'Shapes-for-Habits',
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(const MyApp());

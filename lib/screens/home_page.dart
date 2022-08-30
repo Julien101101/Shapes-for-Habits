@@ -125,8 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                       Container(
                                           margin: EdgeInsets.symmetric(
                                               vertical: 16.0),
-                                          alignment:
-                                              FractionalOffset.centerLeft,
+                                          alignment: Alignment.centerRight,
                                           child: Polygon(
                                             sides: shape.habits[index].count,
                                             color: Color(
