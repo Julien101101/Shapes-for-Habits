@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
@@ -81,71 +83,118 @@ class _MyHomePageState extends State<MyHomePage> {
                                       color: Colors.grey)),
                             ),
                           ))
-                      : ListView.builder(
-                          scrollDirection: Axis.vertical,
+                      : ReorderableListView(
+                          padding: const EdgeInsets.symmetric(horizontal: 40),
                           shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: shape.habits.length,
-                          itemBuilder: ((context, index) {
-                            return InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => ShapeScreen(
-                                              habit: shape.habits[index],
-                                            )));
-                              },
-                              child: Container(
-                                  height: size.height * 0.2,
-                                  margin: const EdgeInsets.symmetric(
-                                    vertical: 16.0,
-                                    horizontal: 24.0,
-                                  ),
-                                  child: Stack(
-                                    children: <Widget>[
-                                      Container(
-                                        height: size.height * 0.3,
-                                        margin: EdgeInsets.only(left: 0.0),
-                                        decoration: BoxDecoration(
-                                          color: Color.fromARGB(
-                                              255, 255, 255, 255),
-                                          shape: BoxShape.rectangle,
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                          boxShadow: <BoxShadow>[
-                                            BoxShadow(
-                                              color: Colors.black12,
-                                              blurRadius: 10.0,
-                                              offset: Offset(0.0, 10.0),
+                          proxyDecorator: proxyDecorator,
+                          children: <Widget>[
+                            for (int index = 0;
+                                index < shape.habits.length;
+                                index += 1)
+                              InkWell(
+                                key: Key('$index'),
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ShapeScreen(
+                                                habit: shape.habits[index],
+                                              )));
+                                },
+                                child: Container(
+                                    height: size.height * 0.2,
+                                    margin: const EdgeInsets.symmetric(
+                                      vertical: 16.0,
+                                      horizontal: 24.0,
+                                    ),
+                                    child: Stack(
+                                      children: <Widget>[
+                                        Container(
+                                          height: size.height * 0.3,
+                                          margin: EdgeInsets.only(left: 0.0),
+                                          decoration: BoxDecoration(
+                                            color: Color.fromARGB(
+                                                255, 255, 255, 255),
+                                            shape: BoxShape.rectangle,
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                            boxShadow: <BoxShadow>[
+                                              BoxShadow(
+                                                color: Colors.black12,
+                                                blurRadius: 10.0,
+                                                offset: Offset(0.0, 10.0),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Flexible(
+                                              flex: 1,
+                                              child: Container(
+                                                  margin: EdgeInsets.symmetric(
+                                                      vertical: 16.0),
+                                                  alignment:
+                                                      Alignment.centerRight,
+                                                  child: Polygon(
+                                                    sides: shape
+                                                        .habits[index].count,
+                                                    color: Color(shape
+                                                        .habits[index].color),
+                                                  )),
+                                            ),
+                                            Flexible(
+                                              flex: 1,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                    shape.habits[index]
+                                                        .objectName,
+                                                    style: TextStyle(
+                                                        fontSize: 20,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black)),
+                                              ),
                                             ),
                                           ],
                                         ),
-                                      ),
-                                      Container(
-                                          margin: EdgeInsets.symmetric(
-                                              vertical: 16.0),
-                                          alignment: Alignment.centerRight,
-                                          child: Polygon(
-                                            sides: shape.habits[index].count,
-                                            color: Color(
-                                                shape.habits[index].color),
-                                          )),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                            shape.habits[index].objectName,
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black)),
-                                      ),
-                                    ],
-                                  )),
-                            );
-                          }))
+                                      ],
+                                    )),
+                              )
+                          ],
+                          onReorder: (int oldIndex, int newIndex) {
+                            setState(() {
+                              if (oldIndex < newIndex) {
+                                newIndex -= 1;
+                              }
+                              final item = shape.habits.removeAt(oldIndex);
+                              shape.habits.insert(newIndex, item);
+                            });
+                          },
+                        )
                 ]),
               ));
         }));
+  }
+
+  Widget proxyDecorator(Widget child, int index, Animation<double> animation) {
+    return AnimatedBuilder(
+      animation: animation,
+      builder: (BuildContext context, Widget? child) {
+        final double animValue = Curves.easeInOut.transform(animation.value);
+        final double elevation = lerpDouble(0, 6, animValue)!;
+        return Material(
+          elevation: elevation,
+          color: Colors.blue,
+          shadowColor: Colors.grey,
+          child: child,
+        );
+      },
+      child: child,
+    );
   }
 }
