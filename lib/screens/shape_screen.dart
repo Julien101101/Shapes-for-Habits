@@ -26,6 +26,7 @@ class ShapeScreen extends StatelessWidget {
                 icon: Icon(
                   Icons.arrow_back,
                   color: Colors.black,
+                  size: size.height * 0.05,
                 ),
                 onPressed: () {
                   Navigator.pop(context);
@@ -35,6 +36,7 @@ class ShapeScreen extends StatelessWidget {
                 icon: Icon(
                   Icons.delete,
                   color: Colors.black,
+                  size: size.height * 0.05,
                 ),
                 onPressed: () async {
                   await shapeViewModel.deleteHabit(habit.id!);
@@ -63,9 +65,12 @@ class ShapeScreen extends StatelessWidget {
                   color: Color(habit.color),
                 ),
               )),
-          Text(habit.objectName + " : " + habit.count.toString(),
+          SizedBox(height: size.height * 0.1),
+          Icon(Icons.close, color: Colors.black, size: size.height * 0.06),
+          SizedBox(height: size.height * 0.1),
+          Text(habit.objectName,
               style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 35,
                   fontWeight: FontWeight.bold,
                   color: Colors.black)),
         ],

@@ -84,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                           ))
                       : ReorderableListView(
-                          padding: const EdgeInsets.symmetric(horizontal: 40),
+                          physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           proxyDecorator: proxyDecorator,
                           children: <Widget>[
