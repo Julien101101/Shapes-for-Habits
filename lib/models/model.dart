@@ -1,10 +1,10 @@
 class Model {
   late final String email;
-  late final String name;
+  String? name;
   late final String id;
   Model({
     required this.email,
-    required this.name,
+    this.name,
     required this.id,
   });
   Model.empty();

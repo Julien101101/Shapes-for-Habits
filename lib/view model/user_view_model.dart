@@ -74,8 +74,9 @@ class UserViewModel extends BaseViewModel {
 
   //getting user from firebase
   Model appUser = Model.empty();
-  getUser(String id) async {
-    ref.doc(id).snapshots().listen((snapshot) {
+  getUser() async {
+    var user = auth.currentUser;
+    ref.doc(user!.uid).snapshots().listen((snapshot) {
       if (snapshot.exists) {
         appUser = Model.fromJson(snapshot as Map<String, dynamic>);
       }
