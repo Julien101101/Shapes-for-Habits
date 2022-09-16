@@ -29,12 +29,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
-          Text(_userViewModel.appUser.name!, style: TextStyle(fontSize: 30, color: Colors.grey),textAlign: TextAlign.center,),
-          Text('Habits', style: TextStyle(fontSize: 20, color: Colors.grey),textAlign: TextAlign.left,),
+          Text(_userViewModel.appUser.name?? "", style: TextStyle(fontSize: 30, color: Colors.grey),textAlign: TextAlign.center,),
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text('Habits: ', style: TextStyle(fontSize: 20, color: Colors.grey),textAlign: TextAlign.left,),
+              ),
+            ],
+          ),
           ListView.builder(
             itemCount: _shapeViewModel.habits.length,
+            shrinkWrap: true,
             itemBuilder: (BuildContext context, int index) {
-              return Text(_shapeViewModel.habits[index].objectName, style: TextStyle(fontSize: 20, color: Colors.grey),textAlign: TextAlign.left,);
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(_shapeViewModel.habits[index].objectName, style: TextStyle(fontSize: 20, color: Colors.grey),textAlign: TextAlign.left,),
+              );
             },
           ),
         ]

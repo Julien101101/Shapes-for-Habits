@@ -6,13 +6,21 @@ import 'package:vs/screens/home_page.dart';
 import 'package:vs/view%20model/shape_view_model.dart';
 import 'package:vs/widgets/polygon.dart';
 
-class ShapeScreen extends StatelessWidget {
+class ShapeScreen extends StatefulWidget {
   final Habits habit;
 
   const ShapeScreen({super.key, required this.habit});
+
+  @override
+  State<ShapeScreen> createState() => _ShapeScreenState();
+}
+
+class _ShapeScreenState extends State<ShapeScreen> {
+  int count = 0;
   @override
   Widget build(BuildContext context) {
     ShapeViewModel shapeViewModel = context.read<ShapeViewModel>();
+    count = widget.habit.count;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Column(
@@ -39,7 +47,7 @@ class ShapeScreen extends StatelessWidget {
                   size: size.height * 0.05,
                 ),
                 onPressed: () async {
-                  await shapeViewModel.deleteHabit(habit.id!);
+                  await shapeViewModel.deleteHabit(widget.habit.id!);
                   pushNewScreen(context,
                       screen: MyHomePage(
                         title: 'Home',
@@ -56,19 +64,29 @@ class ShapeScreen extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: InkWell(
                 onTap: () async {
-                  int count = habit.count;
-                  count++;
-                  await shapeViewModel.editHabit(habit.id!, count);
+                  setState(() {
+                    count++;
+                  });
+                  await shapeViewModel.editHabit(widget.habit.id!, count);
                 },
                 child: Polygon(
-                  sides: habit.count,
-                  color: Color(habit.color),
+                  sides: count,
+                  color: Color(widget.habit.color),
                 ),
               )),
           SizedBox(height: size.height * 0.1),
-          Icon(Icons.close, color: Colors.black, size: size.height * 0.06),
+          InkWell(
+              onTap: () async {
+                setState(() {
+                  count--;
+                });
+
+                await shapeViewModel.editHabit(widget.habit.id!, count);
+              },
+              child: Icon(Icons.close,
+                  color: Colors.black, size: size.height * 0.06)),
           SizedBox(height: size.height * 0.1),
-          Text(habit.objectName,
+          Text(widget.habit.objectName,
               style: TextStyle(
                   fontSize: 35,
                   fontWeight: FontWeight.bold,

@@ -77,8 +77,9 @@ class UserViewModel extends BaseViewModel {
   getUser() async {
     var user = auth.currentUser;
     ref.doc(user!.uid).snapshots().listen((snapshot) {
+      print(snapshot.data());
       if (snapshot.exists) {
-        appUser = Model.fromJson(snapshot as Map<String, dynamic>);
+        appUser = Model.fromJson(snapshot.data() as Map<String, dynamic>);
       }
     });
   }
