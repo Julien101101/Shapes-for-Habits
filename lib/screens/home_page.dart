@@ -33,6 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
     initSharedPref();
     super.initState();
     Future.microtask(() => context.read<ShapeViewModel>().getHabit());
+    Future.microtask(() => context.read<ShapeViewModel>().addIndex());
   }
 
   initSharedPref() async {
@@ -52,6 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
         key: _scaffoldKey,
         body: Consumer<ShapeViewModel>(builder: (context, shape, child) {
+          shape.habits.sort((a, b) => a.index!.compareTo(b.index!));
           return GestureDetector(
               onVerticalDragUpdate: (details) {
                 print('drag');
@@ -172,6 +174,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                 newIndex -= 1;
                               }
                               final item = shape.habits.removeAt(oldIndex);
+                              shape.editIndex(
+                                  shape.habits[newIndex].id!, newIndex);
                               shape.habits.insert(newIndex, item);
                             });
                           },

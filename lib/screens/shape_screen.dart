@@ -16,11 +16,20 @@ class ShapeScreen extends StatefulWidget {
 }
 
 class _ShapeScreenState extends State<ShapeScreen> {
+
   int count = 0;
+
+
+  @override
+  void initState() {
+    super.initState();
+    count = widget.habit.count;
+  }
+
   @override
   Widget build(BuildContext context) {
     ShapeViewModel shapeViewModel = context.read<ShapeViewModel>();
-    count = widget.habit.count;
+
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Column(
@@ -77,8 +86,11 @@ class _ShapeScreenState extends State<ShapeScreen> {
           SizedBox(height: size.height * 0.1),
           InkWell(
               onTap: () async {
+
+                print("count--->" + count.toString());
                 setState(() {
                   count--;
+                  print("new count--->" + count.toString());
                 });
 
                 await shapeViewModel.editHabit(widget.habit.id!, count);
