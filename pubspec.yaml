@@ -45,6 +45,7 @@ dependencies:
   flutter_onboard: ^2.0.0
   swipe: ^0.0.1
   persistent_bottom_nav_bar_v2: ^4.2.4
+  animations: ^2.0.4
 
 dev_dependencies:
   flutter_test:
