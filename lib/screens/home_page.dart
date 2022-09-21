@@ -34,7 +34,6 @@ class _MyHomePageState extends State<MyHomePage> {
     initSharedPref();
     super.initState();
     Future.microtask(() => context.read<ShapeViewModel>().getHabit());
-    Future.microtask(() => context.read<ShapeViewModel>().addIndex());
   }
 
   initSharedPref() async {
@@ -54,7 +53,6 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
         key: _scaffoldKey,
         body: Consumer<ShapeViewModel>(builder: (context, shape, child) {
-          shape.habits.sort((a, b) => a.index!.compareTo(b.index!));
           return GestureDetector(
               child: SingleChildScrollView(
             child: Column(children: [
@@ -83,115 +81,119 @@ class _MyHomePageState extends State<MyHomePage> {
                                   color: Colors.grey)),
                         ),
                       ))
-                  : ReorderableListView.builder(
+                  : ListView.builder(
                       itemCount: shape.habits.length,
                       itemBuilder: (BuildContext context, int index) {
+                        Duration transitionDuration =
+                            const Duration(milliseconds: 800);
+
                         return OpenContainer(
-                          transitionType: ContainerTransitionType.fadeThrough,
+                          transitionType: ContainerTransitionType.fade,
+                          transitionDuration: transitionDuration,
                           closedBuilder:
                               (BuildContext _, VoidCallback openContainer) {
                             return ListTile(
                               key: Key(shape.habits[index].id!),
                               title: Text(shape.habits[index].objectName),
-                              trailing: Icon(Icons.drag_handle),
                               onTap: () {
                                 openContainer();
                               },
                             );
                           },
                           openBuilder:
-                              (BuildContext _, VoidCallback openContainer) {return ShapeScreen(shape.habits[index]);},
+                              (BuildContext _, VoidCallback openContainer) {
+                            return ShapeScreen(habit: shape.habits[index]);
+                          },
                           onClosed: (_) => print('Closed'),
                         );
                       },
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      proxyDecorator: proxyDecorator,
-                      children: <Widget>[
-                        for (int index = 0;
-                            index < shape.habits.length;
-                            index += 1)
-                          InkWell(
-                            key: Key('$index'),
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ShapeScreen(
-                                            habit: shape.habits[index],
-                                          )));
-                            },
-                            child: Container(
-                                height: size.height * 0.2,
-                                margin: const EdgeInsets.symmetric(
-                                  vertical: 16.0,
-                                  horizontal: 24.0,
-                                ),
-                                child: Stack(
-                                  children: <Widget>[
-                                    Container(
-                                      height: size.height * 0.3,
-                                      margin: EdgeInsets.only(left: 0.0),
-                                      decoration: BoxDecoration(
-                                        color:
-                                            Color.fromARGB(255, 255, 255, 255),
-                                        shape: BoxShape.rectangle,
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                        boxShadow: <BoxShadow>[
-                                          BoxShadow(
-                                            color: Colors.black12,
-                                            blurRadius: 10.0,
-                                            offset: Offset(0.0, 10.0),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Flexible(
-                                          flex: 1,
-                                          child: Container(
-                                              margin: EdgeInsets.symmetric(
-                                                  vertical: 16.0),
-                                              alignment: Alignment.centerRight,
-                                              child: Polygon(
-                                                sides:
-                                                    shape.habits[index].count,
-                                                color: Color(
-                                                    shape.habits[index].color),
-                                              )),
-                                        ),
-                                        Flexible(
-                                          flex: 1,
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Text(
-                                                shape.habits[index].objectName,
-                                                style: TextStyle(
-                                                    fontSize: 20,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.black)),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                )),
-                          )
-                      ],
-                      onReorder: (int oldIndex, int newIndex) {
-                        setState(() {
-                          if (oldIndex < newIndex) {
-                            newIndex -= 1;
-                          }
-                          final item = shape.habits.removeAt(oldIndex);
-                          shape.editIndex(shape.habits[newIndex].id!, newIndex);
-                          shape.habits.insert(newIndex, item);
-                        });
-                      },
+                      // children: <Widget>[
+                      //   for (int index = 0;
+                      //       index < shape.habits.length;
+                      //       index += 1)
+                      //     InkWell(
+                      //       key: Key('$index'),
+                      //       onTap: () {
+                      //         Navigator.push(
+                      //             context,
+                      //             MaterialPageRoute(
+                      //                 builder: (context) => ShapeScreen(
+                      //                       habit: shape.habits[index],
+                      //                     )));
+                      //       },
+                      //       child: Container(
+                      //           height: size.height * 0.2,
+                      //           margin: const EdgeInsets.symmetric(
+                      //             vertical: 16.0,
+                      //             horizontal: 24.0,
+                      //           ),
+                      //           child: Stack(
+                      //             children: <Widget>[
+                      //               Container(
+                      //                 height: size.height * 0.3,
+                      //                 margin: EdgeInsets.only(left: 0.0),
+                      //                 decoration: BoxDecoration(
+                      //                   color:
+                      //                       Color.fromARGB(255, 255, 255, 255),
+                      //                   shape: BoxShape.rectangle,
+                      //                   borderRadius:
+                      //                       BorderRadius.circular(8.0),
+                      //                   boxShadow: <BoxShadow>[
+                      //                     BoxShadow(
+                      //                       color: Colors.black12,
+                      //                       blurRadius: 10.0,
+                      //                       offset: Offset(0.0, 10.0),
+                      //                     ),
+                      //                   ],
+                      //                 ),
+                      //               ),
+                      //               Row(
+                      //                 crossAxisAlignment:
+                      //                     CrossAxisAlignment.center,
+                      //                 children: [
+                      //                   Flexible(
+                      //                     flex: 1,
+                      //                     child: Container(
+                      //                         margin: EdgeInsets.symmetric(
+                      //                             vertical: 16.0),
+                      //                         alignment: Alignment.centerRight,
+                      //                         child: Polygon(
+                      //                           sides:
+                      //                               shape.habits[index].count,
+                      //                           color: Color(
+                      //                               shape.habits[index].color),
+                      //                         )),
+                      //                   ),
+                      //                   Flexible(
+                      //                     flex: 1,
+                      //                     child: Padding(
+                      //                       padding: const EdgeInsets.all(8.0),
+                      //                       child: Text(
+                      //                           shape.habits[index].objectName,
+                      //                           style: TextStyle(
+                      //                               fontSize: 20,
+                      //                               fontWeight: FontWeight.bold,
+                      //                               color: Colors.black)),
+                      //                     ),
+                      //                   ),
+                      //                 ],
+                      //               ),
+                      //             ],
+                      //           )),
+                      //     )
+                      // ],
+                      // onReorder: (int oldIndex, int newIndex) {
+                      //   setState(() {
+                      //     if (oldIndex < newIndex) {
+                      //       newIndex -= 1;
+                      //     }
+                      //     final item = shape.habits.removeAt(oldIndex);
+                      //     shape.editIndex(shape.habits[newIndex].id!, newIndex);
+                      //     shape.habits.insert(newIndex, item);
+                      //   });
+                      // },
                     )
             ]),
           ));

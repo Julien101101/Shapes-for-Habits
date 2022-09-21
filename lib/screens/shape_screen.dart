@@ -16,9 +16,7 @@ class ShapeScreen extends StatefulWidget {
 }
 
 class _ShapeScreenState extends State<ShapeScreen> {
-
   int count = 0;
-
 
   @override
   void initState() {
@@ -57,10 +55,7 @@ class _ShapeScreenState extends State<ShapeScreen> {
                 ),
                 onPressed: () async {
                   await shapeViewModel.deleteHabit(widget.habit.id!);
-                  pushNewScreen(context,
-                      screen: MyHomePage(
-                        title: 'Home',
-                      ));
+                  Navigator.of(context).push(_createRoute());
                 },
               ),
             ),
@@ -86,10 +81,11 @@ class _ShapeScreenState extends State<ShapeScreen> {
           SizedBox(height: size.height * 0.1),
           InkWell(
               onTap: () async {
-
                 print("count--->" + count.toString());
                 setState(() {
-                  count--;
+                  if (count > 3) {
+                    count--;
+                  }
                   print("new count--->" + count.toString());
                 });
 
@@ -105,6 +101,26 @@ class _ShapeScreenState extends State<ShapeScreen> {
                   color: Colors.black)),
         ],
       ),
+    );
+  }
+
+  Route _createRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          const MyHomePage(title: 'Home'),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
     );
   }
 }

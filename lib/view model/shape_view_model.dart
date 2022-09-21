@@ -97,7 +97,6 @@ class ShapeViewModel extends BaseViewModel {
             .map((e) => Habits.fromJson(jsonDecode(jsonEncode(e.data()))))
             .toList();
         habits = [...traits];
-        addIndex();
         notifyListeners();
       }
     });
@@ -118,9 +117,5 @@ class ShapeViewModel extends BaseViewModel {
     await ref.doc(id).set({'index': index}, SetOptions(merge: true));
   }
 
-  addIndex() async {
-    for (int i = 0; i < habits.length; i++) {
-      await editIndex(habits[i].id!, i);
-    }
-  }
+
 }

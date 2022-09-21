@@ -81,7 +81,7 @@ class _CreateState extends State<CreateScreen> {
                     child: GridView.builder(
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
+                        crossAxisCount: 5,
                       ),
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: shape.colors.length,
@@ -106,21 +106,22 @@ class _CreateState extends State<CreateScreen> {
                       },
                     ),
                   ),
-                  Flexible(
-                    flex: 1,
-                    child: InkWell(
-                      onTap: () async {
-                        shape.incrementCounter();
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child:
-                            Polygon(sides: shape.counter, color: shape.color),
+                  Container(
+                    padding: EdgeInsets.all(25.0),
+                    alignment: Alignment.topCenter,
+                    child: SizedBox(
+                      height: size.height * 0.5,
+                      child: InkWell(
+                        onTap: () async {
+                          shape.incrementCounter();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child:
+                              Polygon(sides: shape.counter, color: shape.color),
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
                   ),
                   Flexible(
                       child: ElevatedButton(
