@@ -8,6 +8,7 @@ class Habits {
   late final String objectType;
   late final int color;
   late final int count;
+  String? description;
   int? index;
 
   Habits({
@@ -18,6 +19,7 @@ class Habits {
     required this.objectType,
     required this.color,
     required this.count,
+    this.description,
     this.index,
   });
   Map<String, dynamic> toJson() {
@@ -29,6 +31,7 @@ class Habits {
     _data['objectType'] = objectType;
     _data['color'] = color;
     _data['count'] = count;
+    _data['description'] = description;
     _data['index'] = index;
     return _data;
   }
@@ -41,6 +44,7 @@ class Habits {
     objectType = json['objectType'];
     color = json['color'];
     count = json['count'];
+    description = json['description'];
     index = json['index'];
   }
 }

@@ -93,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           closedBuilder:
                               (BuildContext _, VoidCallback openContainer) {
                             return ListTile(
-                              key: Key(shape.habits[index].id!),
+                              key: Key('Key'),
                               title: Text(shape.habits[index].objectName),
                               onTap: () {
                                 openContainer();

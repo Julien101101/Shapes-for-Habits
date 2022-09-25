@@ -94,11 +94,38 @@ class _ShapeScreenState extends State<ShapeScreen> {
               child: Icon(Icons.close,
                   color: Colors.black, size: size.height * 0.06)),
           SizedBox(height: size.height * 0.1),
-          Text(widget.habit.objectName,
-              style: TextStyle(
-                  fontSize: 35,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black)),
+          InkWell(
+            onTap: () {
+              showGeneralDialog(
+                  barrierColor: Colors.black.withOpacity(0.5),
+                  transitionBuilder: (context, a1, a2, MyHomePage) {
+                    return Transform.scale(
+                      scale: a1.value,
+                      child: Opacity(
+                        opacity: a1.value,
+                        child: AlertDialog(
+                          shape: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16.0)),
+                          title: Text('Description'),
+                          content: Text('${widget.habit.description}'),
+                        ),
+                      ),
+                    );
+                  },
+                  transitionDuration: Duration(milliseconds: 200),
+                  barrierDismissible: true,
+                  barrierLabel: '',
+                  context: context,
+                  pageBuilder: (context, animation1, animation2) {
+                    return Container();
+                  });
+            },
+            child: Text(widget.habit.objectName,
+                style: TextStyle(
+                    fontSize: 35,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black)),
+          ),
         ],
       ),
     );
