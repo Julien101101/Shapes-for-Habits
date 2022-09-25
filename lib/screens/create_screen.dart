@@ -75,6 +75,28 @@ class _CreateState extends State<CreateScreen> {
                       ),
                     ),
                   ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: MediaQuery.of(context).size.width * 0.2,
+                        vertical: MediaQuery.of(context).size.height * 0.05),
+                    child: Center(
+                      child: TextFormField(
+                        controller: shape.descriptionTextEditingController,
+                        validator: Validators().validateNotEmpty,
+                        decoration: InputDecoration(
+                          labelText: 'Description',
+                          labelStyle: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: 2,
+                            color: Colors.black,
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.blue),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                   MediaQuery.removePadding(
                     context: context,
                     removeTop: true,

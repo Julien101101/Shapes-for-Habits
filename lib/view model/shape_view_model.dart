@@ -34,6 +34,8 @@ class ShapeViewModel extends BaseViewModel {
   Color get color => _color;
   final TextEditingController nameTextEditingController =
       TextEditingController();
+  final TextEditingController descriptionTextEditingController =
+      TextEditingController();
 
   void setColor(Color color) {
     _color = color;
@@ -64,6 +66,7 @@ class ShapeViewModel extends BaseViewModel {
     Habits habits = Habits(
         date: DateTime.now().toString(),
         userId: user!.uid,
+        description: descriptionTextEditingController.text,
         objectName: nameTextEditingController.text,
         objectType: objectType,
         color: _color.value,
@@ -78,6 +81,7 @@ class ShapeViewModel extends BaseViewModel {
 
   resetvalues() async {
     _counter = 3;
+    descriptionTextEditingController.clear();
     nameTextEditingController.clear();
     notifyListeners();
   }
