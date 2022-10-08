@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
-import 'package:vs/screens/calendar.dart';
 import 'package:vs/screens/home_page.dart';
 import 'package:vs/screens/profile.dart';
 
@@ -17,14 +16,15 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
+
     _controller = PersistentTabController(
       initialIndex: 1,
     );
+
     _buildscreens.add(ProfileScreen());
     _buildscreens.add(MyHomePage(
       title: 'Home',
     ));
-    _buildscreens.add(CalendarPage());
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
@@ -37,11 +37,6 @@ class _MainScreenState extends State<MainScreen> {
       PersistentBottomNavBarItem(
           icon: Icon(Icons.category_sharp),
           title: 'Home',
-          activeColorPrimary: Colors.blue,
-          inactiveColorPrimary: Colors.grey),
-      PersistentBottomNavBarItem(
-          icon: Icon(Icons.calendar_month),
-          title: 'Calendar',
           activeColorPrimary: Colors.blue,
           inactiveColorPrimary: Colors.grey),
     ];

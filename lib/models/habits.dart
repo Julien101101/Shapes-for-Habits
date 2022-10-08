@@ -10,6 +10,8 @@ class Habits {
   late final int count;
   String? description;
   int? index;
+  String? lastUpdated;
+
 
   Habits({
     this.id,
@@ -21,6 +23,7 @@ class Habits {
     required this.count,
     this.description,
     this.index,
+    this.lastUpdated,
   });
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
@@ -33,6 +36,7 @@ class Habits {
     _data['count'] = count;
     _data['description'] = description;
     _data['index'] = index;
+    _data['lastUpdated'] = lastUpdated;
     return _data;
   }
 
@@ -46,5 +50,6 @@ class Habits {
     count = json['count'];
     description = json['description'];
     index = json['index'];
+    lastUpdated = json['lastUpdated'];
   }
 }

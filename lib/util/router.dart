@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vs/screens/create_screen.dart';
 import 'package:vs/screens/login_screen.dart';
-import 'package:vs/screens/name_screen.dart';
 import 'package:vs/screens/sign_up_screen.dart';
 import 'package:vs/widgets/mainscreen.dart';
 
@@ -20,8 +19,6 @@ Route<dynamic> generateRoute(RouteSettings settings) {
               ));
     case 'create':
       return MaterialPageRoute(builder: (context) => const CreateScreen());
-    case 'name':
-      return MaterialPageRoute(builder: (context) => NameScreen());
     case 'main':
       return MaterialPageRoute(builder: (context) => MainScreen());
 

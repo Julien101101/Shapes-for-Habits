@@ -75,8 +75,9 @@ class ShapeViewModel extends BaseViewModel {
       ref.doc(value.id).set({
         'id': value.id,
       }, SetOptions(merge: true));
+      Future.delayed(Duration(seconds: 5));
+      resetvalues();
     });
-    await resetvalues();
   }
 
   resetvalues() async {
@@ -109,6 +110,7 @@ class ShapeViewModel extends BaseViewModel {
   editHabit(String id, int counter) async {
     await ref.doc(id).set({
       'count': counter,
+      'lastUpdated': DateTime.now().toString(),
     }, SetOptions(merge: true));
   }
 

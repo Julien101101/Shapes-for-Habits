@@ -1,18 +1,15 @@
 import 'dart:ui';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vs/screens/create_screen.dart';
 import 'package:vs/screens/shape_screen.dart';
-import 'package:vs/util/app_colors.dart';
 import 'package:vs/view%20model/shape_view_model.dart';
-import 'package:vs/widgets/bullet.dart';
-import 'package:vs/widgets/color_on_select.dart';
-import 'package:vs/widgets/lines.dart';
+import 'package:vs/view%20model/user_view_model.dart';
 import 'package:vs/widgets/polygon.dart';
-import 'package:vs/widgets/shapes.dart';
 import 'package:animations/animations.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -27,24 +24,25 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   SharedPreferences? sharedPreferences;
-  bool _isFirstTime = false;
   String? id;
   @override
   void initState() {
     initSharedPref();
     super.initState();
     Future.microtask(() => context.read<ShapeViewModel>().getHabit());
+    Future.microtask(() => context.read<UserViewModel>().getUser());
   }
 
   initSharedPref() async {
     sharedPreferences = await SharedPreferences.getInstance();
     id = sharedPreferences!.getString('id');
-    print('initSharedPref');
   }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
+    UserViewModel _userViewModel = context.read<UserViewModel>();
     // if (id == null) {
     //   Future.delayed(Duration.zero, () => showAlert(context));
     //   _isFirstTime = true;
@@ -53,13 +51,26 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
         key: _scaffoldKey,
         body: Consumer<ShapeViewModel>(builder: (context, shape, child) {
-          return GestureDetector(
-              child: SingleChildScrollView(
+          return SingleChildScrollView(
             child: Column(children: [
+              Padding(
+                padding: EdgeInsets.only(
+                  top: size.height * 0.1,
+                ),
+                child: Center(
+                    child: Text(
+                  _userViewModel.appUser.name! + "'s Shapes",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.grey[800],
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold),
+                )),
+              ),
               Container(
                 padding: shape.habits.isEmpty
-                    ? EdgeInsets.only(top: size.height * 0.3)
-                    : EdgeInsets.only(top: size.height * 0.1),
+                    ? EdgeInsets.only(top: size.height * 0.1)
+                    : EdgeInsets.only(top: size.height * 0.05),
                 child: FloatingActionButton(
                   onPressed: () {
                     pushNewScreen(context, screen: CreateScreen());
@@ -81,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   color: Colors.grey)),
                         ),
                       ))
-                  : ListView.builder(
+                  : ReorderableListView.builder(
                       itemCount: shape.habits.length,
                       itemBuilder: (BuildContext context, int index) {
                         Duration transitionDuration =
@@ -92,12 +103,71 @@ class _MyHomePageState extends State<MyHomePage> {
                           transitionDuration: transitionDuration,
                           closedBuilder:
                               (BuildContext _, VoidCallback openContainer) {
-                            return ListTile(
-                              key: Key('Key'),
-                              title: Text(shape.habits[index].objectName),
-                              onTap: () {
-                                openContainer();
-                              },
+                            return InkWell(
+                              onTap: openContainer,
+                              child: Container(
+                                  height: size.height * 0.2,
+                                  margin: const EdgeInsets.symmetric(
+                                    vertical: 16.0,
+                                    horizontal: 24.0,
+                                  ),
+                                  child: Stack(
+                                    children: <Widget>[
+                                      Container(
+                                        height: size.height * 0.3,
+                                        margin: EdgeInsets.only(left: 0.0),
+                                        decoration: BoxDecoration(
+                                          color: Color.fromARGB(
+                                              255, 255, 255, 255),
+                                          shape: BoxShape.rectangle,
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                          boxShadow: <BoxShadow>[
+                                            BoxShadow(
+                                              color: Colors.black12,
+                                              blurRadius: 10.0,
+                                              offset: Offset(0.0, 10.0),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Flexible(
+                                            flex: 1,
+                                            child: Container(
+                                                margin: EdgeInsets.symmetric(
+                                                    vertical: 16.0),
+                                                alignment:
+                                                    Alignment.centerRight,
+                                                child: Polygon(
+                                                  sides:
+                                                      shape.habits[index].count,
+                                                  color: Color(shape
+                                                      .habits[index].color),
+                                                )),
+                                          ),
+                                          Flexible(
+                                            flex: 1,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Text(
+                                                  shape
+                                                      .habits[index].objectName,
+                                                  style: TextStyle(
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black)),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  )),
                             );
                           },
                           openBuilder:
@@ -196,7 +266,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       // },
                     )
             ]),
-          ));
+          );
         }));
   }
 
