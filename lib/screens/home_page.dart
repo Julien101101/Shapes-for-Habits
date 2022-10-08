@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +10,6 @@ import 'package:vs/screens/shape_screen.dart';
 import 'package:vs/view%20model/shape_view_model.dart';
 import 'package:vs/view%20model/user_view_model.dart';
 import 'package:vs/widgets/polygon.dart';
-import 'package:animations/animations.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -25,6 +24,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   SharedPreferences? sharedPreferences;
   String? id;
+
   @override
   void initState() {
     initSharedPref();
@@ -52,6 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
         key: _scaffoldKey,
         body: Consumer<ShapeViewModel>(builder: (context, shape, child) {
           return SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
             child: Column(children: [
               Padding(
                 padding: EdgeInsets.only(
@@ -92,178 +93,93 @@ class _MyHomePageState extends State<MyHomePage> {
                                   color: Colors.grey)),
                         ),
                       ))
-                  : ReorderableListView.builder(
-                      itemCount: shape.habits.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        Duration transitionDuration =
-                            const Duration(milliseconds: 800);
-
-                        return OpenContainer(
-                          transitionType: ContainerTransitionType.fade,
-                          transitionDuration: transitionDuration,
-                          closedBuilder:
-                              (BuildContext _, VoidCallback openContainer) {
-                            return InkWell(
-                              onTap: openContainer,
-                              child: Container(
-                                  height: size.height * 0.2,
-                                  margin: const EdgeInsets.symmetric(
-                                    vertical: 16.0,
-                                    horizontal: 24.0,
-                                  ),
-                                  child: Stack(
-                                    children: <Widget>[
-                                      Container(
-                                        height: size.height * 0.3,
-                                        margin: EdgeInsets.only(left: 0.0),
-                                        decoration: BoxDecoration(
-                                          color: Color.fromARGB(
-                                              255, 255, 255, 255),
-                                          shape: BoxShape.rectangle,
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                          boxShadow: <BoxShadow>[
-                                            BoxShadow(
-                                              color: Colors.black12,
-                                              blurRadius: 10.0,
-                                              offset: Offset(0.0, 10.0),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Flexible(
-                                            flex: 1,
-                                            child: Container(
-                                                margin: EdgeInsets.symmetric(
-                                                    vertical: 16.0),
-                                                alignment:
-                                                    Alignment.centerRight,
-                                                child: Polygon(
-                                                  sides:
-                                                      shape.habits[index].count,
-                                                  color: Color(shape
-                                                      .habits[index].color),
-                                                )),
-                                          ),
-                                          Flexible(
-                                            flex: 1,
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Text(
-                                                  shape
-                                                      .habits[index].objectName,
-                                                  style: TextStyle(
-                                                      fontSize: 20,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.black)),
-                                            ),
+                  : ReorderableListView(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                      children: <Widget>[
+                        for (int index = 0;
+                            index < shape.habits.length;
+                            index += 1)
+                          InkWell(
+                            key: Key('$index'),
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ShapeScreen(
+                                            habit: shape.habits[index],
+                                          )));
+                            },
+                            child: Container(
+                                height: size.height * 0.2,
+                                margin: const EdgeInsets.symmetric(
+                                  vertical: 16.0,
+                                  horizontal: 24.0,
+                                ),
+                                child: Stack(
+                                  children: <Widget>[
+                                    Container(
+                                      height: size.height * 0.3,
+                                      margin: EdgeInsets.only(left: 0.0),
+                                      decoration: BoxDecoration(
+                                        color:
+                                            Color.fromARGB(255, 255, 255, 255),
+                                        shape: BoxShape.rectangle,
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                        boxShadow: <BoxShadow>[
+                                          BoxShadow(
+                                            color: Colors.black12,
+                                            blurRadius: 10.0,
+                                            offset: Offset(0.0, 10.0),
                                           ),
                                         ],
                                       ),
-                                    ],
-                                  )),
-                            );
-                          },
-                          openBuilder:
-                              (BuildContext _, VoidCallback openContainer) {
-                            return ShapeScreen(habit: shape.habits[index]);
-                          },
-                          onClosed: (_) => print('Closed'),
-                        );
+                                    ),
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Flexible(
+                                          flex: 1,
+                                          child: Container(
+                                              margin: EdgeInsets.symmetric(
+                                                  vertical: 16.0),
+                                              alignment: Alignment.centerRight,
+                                              child: Polygon(
+                                                sides:
+                                                    shape.habits[index].count,
+                                                color: Color(
+                                                    shape.habits[index].color),
+                                              )),
+                                        ),
+                                        Flexible(
+                                          flex: 1,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                                shape.habits[index].objectName,
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black)),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                )),
+                          )
+                      ],
+                      onReorder: (int oldIndex, int newIndex) {
+                        setState(() {
+                          if (oldIndex < newIndex) {
+                            newIndex -= 1;
+                          }
+                          final item = shape.habits.removeAt(oldIndex);
+                          shape.habits.insert(newIndex, item);
+                        });
                       },
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      // children: <Widget>[
-                      //   for (int index = 0;
-                      //       index < shape.habits.length;
-                      //       index += 1)
-                      //     InkWell(
-                      //       key: Key('$index'),
-                      //       onTap: () {
-                      //         Navigator.push(
-                      //             context,
-                      //             MaterialPageRoute(
-                      //                 builder: (context) => ShapeScreen(
-                      //                       habit: shape.habits[index],
-                      //                     )));
-                      //       },
-                      //       child: Container(
-                      //           height: size.height * 0.2,
-                      //           margin: const EdgeInsets.symmetric(
-                      //             vertical: 16.0,
-                      //             horizontal: 24.0,
-                      //           ),
-                      //           child: Stack(
-                      //             children: <Widget>[
-                      //               Container(
-                      //                 height: size.height * 0.3,
-                      //                 margin: EdgeInsets.only(left: 0.0),
-                      //                 decoration: BoxDecoration(
-                      //                   color:
-                      //                       Color.fromARGB(255, 255, 255, 255),
-                      //                   shape: BoxShape.rectangle,
-                      //                   borderRadius:
-                      //                       BorderRadius.circular(8.0),
-                      //                   boxShadow: <BoxShadow>[
-                      //                     BoxShadow(
-                      //                       color: Colors.black12,
-                      //                       blurRadius: 10.0,
-                      //                       offset: Offset(0.0, 10.0),
-                      //                     ),
-                      //                   ],
-                      //                 ),
-                      //               ),
-                      //               Row(
-                      //                 crossAxisAlignment:
-                      //                     CrossAxisAlignment.center,
-                      //                 children: [
-                      //                   Flexible(
-                      //                     flex: 1,
-                      //                     child: Container(
-                      //                         margin: EdgeInsets.symmetric(
-                      //                             vertical: 16.0),
-                      //                         alignment: Alignment.centerRight,
-                      //                         child: Polygon(
-                      //                           sides:
-                      //                               shape.habits[index].count,
-                      //                           color: Color(
-                      //                               shape.habits[index].color),
-                      //                         )),
-                      //                   ),
-                      //                   Flexible(
-                      //                     flex: 1,
-                      //                     child: Padding(
-                      //                       padding: const EdgeInsets.all(8.0),
-                      //                       child: Text(
-                      //                           shape.habits[index].objectName,
-                      //                           style: TextStyle(
-                      //                               fontSize: 20,
-                      //                               fontWeight: FontWeight.bold,
-                      //                               color: Colors.black)),
-                      //                     ),
-                      //                   ),
-                      //                 ],
-                      //               ),
-                      //             ],
-                      //           )),
-                      //     )
-                      // ],
-                      // onReorder: (int oldIndex, int newIndex) {
-                      //   setState(() {
-                      //     if (oldIndex < newIndex) {
-                      //       newIndex -= 1;
-                      //     }
-                      //     final item = shape.habits.removeAt(oldIndex);
-                      //     shape.editIndex(shape.habits[newIndex].id!, newIndex);
-                      //     shape.habits.insert(newIndex, item);
-                      //   });
-                      // },
                     )
             ]),
           );
