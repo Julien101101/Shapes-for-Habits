@@ -1,13 +1,17 @@
 class Model {
+
   late final String email;
   String? name;
   late final String id;
+
   Model({
     required this.email,
     this.name,
     required this.id,
   });
+
   Model.empty();
+  
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['email'] = email;

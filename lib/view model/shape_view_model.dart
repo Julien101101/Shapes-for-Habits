@@ -4,14 +4,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:vs/models/habits.dart';
+import 'package:vs/models/time_table.dart';
 import 'package:vs/view%20model/view_model.dart';
 
 class ShapeViewModel extends BaseViewModel {
   CollectionReference ref = FirebaseFirestore.instance.collection('habits');
+  CollectionReference ref2 =
+      FirebaseFirestore.instance.collection('time_table');
+
   FirebaseAuth auth = FirebaseAuth.instance;
 
-  List names = ['polygon', 'dots', 'lines'];
-  String choice = '';
   List<Color> colors = [
     Colors.black,
     Colors.orange,
@@ -112,6 +114,15 @@ class ShapeViewModel extends BaseViewModel {
       'count': counter,
       'lastUpdated': DateTime.now().toString(),
     }, SetOptions(merge: true));
+    TimeTable timeTable = TimeTable(
+      habitId: id,
+      isDone: true,
+    );
+    await ref2.add(timeTable.toJson()).then((value) {
+      ref2.doc(value.id).set({
+        'id': value.id,
+      }, SetOptions(merge: true));
+    });
   }
 
   deleteHabit(String id) async {
@@ -122,6 +133,4 @@ class ShapeViewModel extends BaseViewModel {
   editIndex(String id, int index) async {
     await ref.doc(id).set({'index': index}, SetOptions(merge: true));
   }
-
-
 }
