@@ -4,8 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:vs/models/habits.dart';
-import 'package:vs/view%20model/view_model.dart';
+import 'package:sfh/models/habits.dart';
+import 'package:sfh/view%20model/view_model.dart';
 
 class ShapeViewModel extends BaseViewModel {
   CollectionReference ref = FirebaseFirestore.instance.collection('habits');

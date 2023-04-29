@@ -5,9 +5,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:vs/models/model.dart';
-import 'package:vs/screens/login_screen.dart';
-import 'package:vs/view%20model/view_model.dart';
+import 'package:sfh/models/model.dart';
+import 'package:sfh/screens/login_screen.dart';
+import 'package:sfh/view%20model/view_model.dart';
 
 class UserViewModel extends BaseViewModel {
   CollectionReference ref = FirebaseFirestore.instance.collection('users');

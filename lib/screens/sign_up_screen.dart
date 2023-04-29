@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:vs/util/constants.dart';
-import 'package:vs/util/validators.dart';
-import 'package:vs/view%20model/user_view_model.dart';
+import 'package:sfh/util/constants.dart';
+import 'package:sfh/util/validators.dart';
+import 'package:sfh/view%20model/user_view_model.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override

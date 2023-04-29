@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
-import 'package:vs/models/habits.dart';
-import 'package:vs/screens/home_page.dart';
-import 'package:vs/view%20model/shape_view_model.dart';
-import 'package:vs/widgets/polygon.dart';
+import 'package:sfh/models/habits.dart';
+import 'package:sfh/screens/home_page.dart';
+import 'package:sfh/view%20model/shape_view_model.dart';
+import 'package:sfh/widgets/polygon.dart';
 
 class ShapeScreen extends StatelessWidget {
   final Habits habit;

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:vs/util/validators.dart';
-import 'package:vs/view%20model/user_view_model.dart';
-import 'package:vs/widgets/input_field.dart';
+import 'package:sfh/util/validators.dart';
+import 'package:sfh/view%20model/user_view_model.dart';
+import 'package:sfh/widgets/input_field.dart';
 
 class NameScreen extends StatefulWidget {
   NameScreen({Key? key}) : super(key: key);

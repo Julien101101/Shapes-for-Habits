@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_onboard/flutter_onboard.dart';
-import 'package:vs/util/constants.dart';
-import 'package:vs/util/dimensions.dart';
+import 'package:sfh/util/constants.dart';
+import 'package:sfh/util/dimensions.dart';
 
 class IntroScreen extends StatelessWidget {
   final PageController _pageController = PageController();
