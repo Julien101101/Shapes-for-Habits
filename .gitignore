@@ -47,4 +47,5 @@ app.*.map.json
 /android/app/release
 
 # Ignore node_modules
+# this is what I added
 node_modules/
