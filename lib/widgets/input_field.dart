@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:vs/util/app_colors.dart';
-import 'package:vs/util/dimensions.dart';
+import 'package:sfh/util/app_colors.dart';
+import 'package:sfh/util/dimensions.dart';
 
 class RoundedInputField extends StatefulWidget {
   final String? hintText;

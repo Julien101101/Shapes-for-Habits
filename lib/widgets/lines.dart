@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vs/util/dimensions.dart';
+import 'package:sfh/util/dimensions.dart';
 
 class Lines extends StatelessWidget {
   Lines({Key? key, required this.length, required this.color})

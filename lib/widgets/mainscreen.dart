@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
-import 'package:vs/screens/calendar.dart';
-import 'package:vs/screens/home_page.dart';
-import 'package:vs/screens/profile.dart';
+import 'package:sfh/screens/home_page.dart';
+import 'package:sfh/screens/profile.dart';
 
 class MainScreen extends StatefulWidget {
   MainScreen({Key? key}) : super(key: key);
@@ -24,7 +23,6 @@ class _MainScreenState extends State<MainScreen> {
     _buildscreens.add(MyHomePage(
       title: 'Home',
     ));
-    _buildscreens.add(CalendarPage());
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {

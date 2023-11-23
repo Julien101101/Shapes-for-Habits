@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:vs/view%20model/shape_view_model.dart';
-import 'package:vs/widgets/bullet.dart';
+import 'package:sfh/view%20model/shape_view_model.dart';
+import 'package:sfh/widgets/bullet.dart';
 
 class Shape extends StatefulWidget {
   const Shape({Key? key}) : super(key: key);

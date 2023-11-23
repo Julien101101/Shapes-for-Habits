@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:vs/screens/create_screen.dart';
-import 'package:vs/screens/login_screen.dart';
-import 'package:vs/screens/name_screen.dart';
-import 'package:vs/screens/sign_up_screen.dart';
-import 'package:vs/widgets/mainscreen.dart';
+import 'package:sfh/screens/create_screen.dart';
+import 'package:sfh/screens/login_screen.dart';
+import 'package:sfh/screens/name_screen.dart';
+import 'package:sfh/screens/sign_up_screen.dart';
+import 'package:sfh/widgets/mainscreen.dart';
 
 import '../screens/home_page.dart';
 
