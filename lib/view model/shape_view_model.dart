@@ -76,7 +76,7 @@ class ShapeViewModel extends BaseViewModel {
         'id': value.id,
       }, SetOptions(merge: true));
     });
-  }  // comment 6
+  }  // comment 7
 
   List<Habits> habits = [];
   getHabit() async {
